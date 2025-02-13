@@ -1,8 +1,8 @@
 public class MagnetSegment {
     private double length;
 
-    private double angleXY;//the angle of r on the XY plane, measured from the x axis
-    private double angleXZ;//the angle of r on the XZ plane, measured from the x axis
+    private double angleXY;//the angle of r on the XY plane, measured from the x-axis
+    private double angleXZ;//the angle of r on the XZ plane, measured from the x-axis
     //the length in the x, y and z directions
     private double lengthX;
     private double lengthY;
@@ -34,7 +34,7 @@ public class MagnetSegment {
             direction[i] = (direction[i]/r);
         }
         //System.out.println(r);
-        double[] total = vectorMultiply(lengthX, lengthY, lengthZ, direction[0], direction[1], direction[2]);
+        double[] total = VectorHandler.vectorMultiply(lengthX, lengthY, lengthZ, direction[0], direction[1], direction[2]);
         //printList(total);
         for(int i = 0; i<3; i++){
             total[i] = (total[i]*current/Math.pow(r,2))*Math.pow(10, -7);
@@ -57,10 +57,6 @@ public class MagnetSegment {
         } else {
             return(Math.cos(angle)*l);
         }
-    }
-    public static double[] vectorMultiply(double x1, double y1, double z1, double x2, double y2, double z2){//
-        double[] vectorProduct = {y1*z2-z1*y2, z1*x2-x1*z2, x1*y2-y1*x2};
-        return vectorProduct;
     }
     public static void printList(double[] l){//
         for(double n: l){
