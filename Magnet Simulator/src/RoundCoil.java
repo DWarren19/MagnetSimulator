@@ -1,9 +1,7 @@
-public class RoundCoil {
+public class RoundCoil extends Coil {
     private MagnetSegment[] segments;
-    private Circle approximation;
-
     public RoundCoil(double radius, int precision, double current, double z){
-        approximation = new Circle(radius, precision);
+        Circle approximation = new Circle(radius, precision);
         segments = new MagnetSegment[precision];
         double l = (Math.PI * 2)/precision;
         double lDeg = 360/precision;
@@ -14,16 +12,6 @@ public class RoundCoil {
             //System.out.println();
             segments[i] = new MagnetSegment(approximation.outerSideLength(), Math.sin(l*i)*radius, -Math.cos(l*i)*radius, z, l*i, 0, current);
         }
+        super.setSegments(segments);
     }
-    public double[] getStrength(double x, double y, double z){
-        double total[] = {0,0,0};
-        for(int i = 0; i<segments.length; i++){
-            //segments[i].printList(segments[i].getStrength(x,y,z));
-            total[0] += segments[i].getStrength(x,y,z)[0];
-            total[1] += segments[i].getStrength(x,y,z)[1];
-            total[2] += segments[i].getStrength(x,y,z)[2];
-        }
-        return total;
-    }
-
 }
