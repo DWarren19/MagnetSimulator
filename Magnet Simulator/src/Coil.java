@@ -3,6 +3,9 @@ public class Coil {
 
     public Coil(){
     }
+    public Coil(MagnetSegment[] s){
+        segments = s;
+    }
     public void setSegments(MagnetSegment[] s){
         segments = s;
     }

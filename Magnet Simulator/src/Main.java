@@ -4,7 +4,7 @@ public class Main {
     public static void main(String[] args) {
         //RoundMagnet test = new RoundMagnet(4.3, 0.6, 1.52, 2.195, 52.33296, 100);
         //MagnetSegment.printList(test.getStrength(0,0.1,0.1));
-        SquareCoil test = new SquareCoil(50, 150, 100, 1, 0);
+        SquareCoil test = new SquareCoil(50, 150, 200, 1, 0);
         /*
         for(double r = 0; r<=2; r+=0.1){
             for(double z = 0; z<=2; z+=0.1){
