@@ -7,7 +7,7 @@ public class SquareCoil extends Coil {
         double curvedSegments = (precision*curvedLength)/(curvedLength+straightLength);
         double straightSegments = (precision*straightLength)/(curvedLength+straightLength);
         double l = (Math.PI * 2)/curvedSegments;
-        segments = new MagnetSegment[precision];
+        segments = new MagnetSegment[1];
         double angle = 0;
         boolean[][] testArray = new boolean[(int) (length)+1][(int) (length)+1];
         int total = 0;
@@ -145,6 +145,7 @@ public class SquareCoil extends Coil {
             }
             System.out.println();
         }
+        System.out.println(segments.length);
         //
         //System.out.println(segments[segments.length-150]);
         super.setSegments(segments);
@@ -152,6 +153,7 @@ public class SquareCoil extends Coil {
     //replace with Queue?
     public MagnetSegment[] checkArray(MagnetSegment[] array, MagnetSegment next){
         if (array[array.length-1] == null){
+            array[array.length-1] = next;
             return array;
         } else {
             MagnetSegment[] temp = new MagnetSegment[array.length+1];
