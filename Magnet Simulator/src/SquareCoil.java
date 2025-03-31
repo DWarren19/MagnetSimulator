@@ -9,20 +9,20 @@ public class SquareCoil extends Coil {
         double l = (Math.PI * 2)/curvedSegments;
         segments = new MagnetSegment[1];
         double angle = 0;
-        boolean[][] testArray = new boolean[(int) (length)+1][(int) (length)+1];
+        boolean[][] testArray = new boolean[(int) (length+1.5)][(int) (length+1.5)];
         int total = 0;
         for(int count = 0; count <curvedSegments/4; count++) {
             angle += l;
             //this section is for testing and should be commented out
             //output an image of the coil using text
             // +0.5 is used to round values
-            // +length/2 is used to make all values positive
+            /* +length/2 is used to make all values positive
             int x = (int) ((Math.sin(angle) * radius + length / 2 - radius) + 0.5   +length/2);
             System.out.println(x);
             int y = (int) ((Math.cos(angle) * radius + length / 2 - radius) + 0.5   +length/2);
             System.out.println(y);
             testArray[x][y] = true;
-            //
+            */
             MagnetSegment next = new MagnetSegment(corner.outerSideLength(), Math.sin(angle) * radius + length / 2 - radius, Math.cos(angle) * radius + length / 2 - radius, z, angle, 0, current);
             segments = checkArray(segments, next);
             total++;
@@ -30,13 +30,13 @@ public class SquareCoil extends Coil {
         System.out.println(Math.toDegrees(angle));
         for(int count = 0; count <straightSegments/4; count++){
             //this section is for testing and should be commented out
-            //output an image of the coil using text
-            int x = (int) ((length/*/2 should be added here, but this will result in some negative values*/) + 0.5);
+            /*output an image of the coil using text
+            int x = (int) ((length/*2 should be added here, but this will result in some negative values/) + 0.5);
             System.out.println(x);
-            int y = (int) (length/*/2*/-(4*count*(length-2*radius)/straightSegments)-radius + 0.5);
+            int y = (int) (length/*2-(4*count*(length-2*radius)/straightSegments)-radius + 0.5);
             System.out.println(y);
             testArray[x][y] = true;
-            //
+            */
             MagnetSegment next = new MagnetSegment(corner.outerSideLength(), length/2, length/2-(4*count*(length-2*radius)/straightSegments)-radius, z, angle, 0, current);
             segments = checkArray(segments, next);
             total++;
@@ -47,13 +47,13 @@ public class SquareCoil extends Coil {
             //this section is for testing and should be commented out
             //output an image of the coil using text
             // +0.5 is used to round values
-            // +length/2 is used to make all values positive
+            /* +length/2 is used to make all values positive
             int x = (int) ((Math.sin(angle) * radius + length / 2 - radius) + 0.5   +length/2);
             System.out.println(x);
             int y = (int) ((Math.cos(angle) * radius - length / 2 + radius) + 0.5   +length/2);
             System.out.println(y);
             testArray[x][y] = true;
-            //
+            */
             MagnetSegment next = new MagnetSegment(corner.outerSideLength(), Math.sin(angle) * radius + length / 2 - radius, Math.cos(angle) * radius - length / 2 + radius, z, angle, 0, current);
             segments = checkArray(segments, next);
             total++;
@@ -61,13 +61,13 @@ public class SquareCoil extends Coil {
         System.out.println(Math.toDegrees(angle));
         for(int count = 0; count <straightSegments/4; count++){
             //this section is for testing and should be commented out
-            //output an image of the coil using text
-            int x = (int) (length/*/2*/-(4*count*(length-2*radius)/straightSegments)-radius);
+            /*output an image of the coil using text
+            int x = (int) (length/*2/-(4*count*(length-2*radius)/straightSegments)-radius);
             System.out.println(x);
-            int y = (int) ((length/*/2 should be added here, but this will result in some negative values*/) + 0.5);
+            int y = (int) ((length/*2/) + 0.5);
             System.out.println(y);
             testArray[x][y] = true;
-            //
+            */
             MagnetSegment next = new MagnetSegment(corner.outerSideLength(), length/2-(4*count*(length-2*radius)/straightSegments)-radius, length/2, z, angle, 0, current);
             segments = checkArray(segments, next);
             total++;
@@ -78,13 +78,13 @@ public class SquareCoil extends Coil {
             //this section is for testing and should be commented out
             //output an image of the coil using text
             // +0.5 is used to round values
-            // +length/2 is used to make all values positive
+            /* +length/2 is used to make all values positive
             int x = (int) ((Math.sin(angle) * radius + length / 2 + radius) + 0.5   -length/2);
             System.out.println(x);
             int y = (int) ((Math.cos(angle) * radius - length / 2 + radius) + 0.5   +length/2);
             System.out.println(y);
             testArray[x][y] = true;
-            //
+            */
             MagnetSegment next = new MagnetSegment(corner.outerSideLength(), (Math.sin(angle) * radius + length / 2 + radius)-length, Math.cos(angle) * radius - length / 2 + radius, z, angle, 0, current);
             segments = checkArray(segments, next);
             total++;
@@ -92,13 +92,13 @@ public class SquareCoil extends Coil {
         System.out.println(Math.toDegrees(angle));
         for(int count = 0; count <straightSegments/4; count++){
             //this section is for testing and should be commented out
-            //output an image of the coil using text
+            /*output an image of the coil using text
             int x = 0;//should be -length/2
             System.out.println(x);
-            int y = (int) (length/*/2*/-(4*count*(length-2*radius)/straightSegments)-radius + 0.5);
+            int y = (int) (length/2/-(4*count*(length-2*radius)/straightSegments)-radius + 0.5);
             System.out.println(y);
             testArray[x][y] = true;
-            //
+            */
             MagnetSegment next = new MagnetSegment(corner.outerSideLength(), -length/2, length/2-(4*count*(length-2*radius)/straightSegments)-radius, z, angle, 0, current);
             segments = checkArray(segments, next);
             total++;

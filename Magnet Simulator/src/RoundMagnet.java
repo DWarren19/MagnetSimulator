@@ -1,5 +1,5 @@
 public class RoundMagnet {
-    private RoundCoil[] coils;
+    private Coil[] coils;
     public RoundMagnet(double length, double split, double inner, double outer, double density, int precision){
         //measurements in cm
         //length = total length including split
@@ -12,18 +12,43 @@ public class RoundMagnet {
         //System.out.println(1/incrementZ);
         int sizeR = (int)Math.round((outer-inner)*density);
         double incrementR = (outer-inner)/sizeR;
-        coils = new RoundCoil[sizeZ*sizeR];//total number of windings
+        double windings = ((length-split)*density)*((outer-inner)*density);
+        double current = windings/(sizeZ*sizeR);//current changes to account for nonexistent windings-some windings will have been lost due to rounding errors
+        coils = new Coil[sizeZ*sizeR];//total number of windings
         int count = 0;
         for(double z = -length/2+(0.5*incrementZ); z<-split/2; z+=incrementZ){
             for(double r = inner+(0.5*incrementR); r<outer; r+=incrementR){
-                coils[count] = new RoundCoil(r, precision, 1, z);//current is 1 to give results in magnetic field per amp
+                coils[count] = new RoundCoil(r, precision, current, z);
                 count++;
             }
         }
         int count2 = 0;
         for(double z = split/2+(0.5*incrementZ); z<length/2; z+=incrementZ){
             for(double r = inner+(0.5*incrementR); r<outer; r+=incrementR){
-                coils[count+count2] = new RoundCoil(r, precision, 1, z);//current is 1 to give results in magnetic field per amp
+                coils[count+count2] = new RoundCoil(r, precision, current, z);//current is 1 to give results in magnetic field per amp
+                count2++;
+            }
+        }
+    }
+    public RoundMagnet(double length, double split, double inner, double outer, double density, int precision, double initialRadius){
+        int sizeZ = (int)Math.round((length-split)*density);
+        double incrementZ = (length-split)/sizeZ;
+        int sizeR = (int)Math.round((outer-inner)*density);
+        double incrementR = (outer-inner)/sizeR;
+        double windings = ((length-split)*density)*((outer-inner)*density);
+        double current = windings/(sizeZ*sizeR);//current changes to account for nonexistent windings-some windings will have been lost due to rounding errors
+        coils = new Coil[sizeZ*sizeR];//total number of windings
+        int count = 0;
+        for(double z = -length/2+(0.5*incrementZ); z<-split/2; z+=incrementZ){
+            for(double l = inner+(0.5*incrementR); l<outer; l+=incrementR){
+                coils[count] = new SquareCoil(2*initialRadius-inner+l, l, precision, current, z);
+                count++;
+            }
+        }
+        int count2 = 0;
+        for(double z = split/2+(0.5*incrementZ); z<length/2; z+=incrementZ){
+            for(double l = inner+(0.5*incrementR); l<outer; l+=incrementR){
+                coils[count+count2] = new SquareCoil(2*initialRadius-inner+l, l, precision, current, z);//current is 1 to give results in magnetic field per amp
                 count2++;
             }
         }

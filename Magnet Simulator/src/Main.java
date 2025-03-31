@@ -2,10 +2,10 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //RoundMagnet test = new RoundMagnet(4.3, 0.6, 1.52, 2.195, 52.33296, 100);
-        //MagnetSegment.printList(test.getStrength(0,0.1,0.1));
-        SquareCoil test = new SquareCoil(30, 100, 100, 1, 0);
-        VectorHandler.printList(test.getStrength(0,0,0));
+        RoundMagnet test = new RoundMagnet(4.3, 0.6, 1.52, 2.195, 52.33296, 100);
+        VectorHandler.printList(test.getStrength(0,0.1,0.1));
+        RoundMagnet test2 = new RoundMagnet(4.3, 0.6, 1.52, 2.195, 52.33296, 100, 0.76);
+        VectorHandler.printList(test2.getStrength(0,0.1,0.1));
         /*
         for(double r = 0; r<=2; r+=0.1){
             for(double z = 0; z<=2; z+=0.1){
