@@ -23,7 +23,7 @@ public class SquareCoil extends Coil {
             System.out.println(y);
             testArray[x][y] = true;
             */
-            MagnetSegment next = new MagnetSegment(corner.outerSideLength(), Math.sin(angle) * radius + length / 2 - radius, Math.cos(angle) * radius + length / 2 - radius, z, angle, 0, current);
+            MagnetSegment next = new MagnetSegment(corner.outerSideLength(), Math.sin(angle) * radius + length / 2 - radius, Math.cos(angle) * radius + length / 2 - radius, z, -angle+Math.PI/2, 0, current);//implement this in the other loops too
             segments = checkArray(segments, next);
             total++;
         }
