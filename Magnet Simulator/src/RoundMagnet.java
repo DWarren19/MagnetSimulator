@@ -41,14 +41,14 @@ public class RoundMagnet {
         int count = 0;
         for(double z = -length/2+(0.5*incrementZ); z<-split/2; z+=incrementZ){
             for(double l = inner+(0.5*incrementR); l<outer; l+=incrementR){
-                coils[count] = new SquareCoil(2*initialRadius-inner+l, l, precision, current, z);
+                coils[count] = new SquareCoil2(2*initialRadius-inner+l, l, precision, current, z);
                 count++;
             }
         }
         int count2 = 0;
         for(double z = split/2+(0.5*incrementZ); z<length/2; z+=incrementZ){
             for(double l = inner+(0.5*incrementR); l<outer; l+=incrementR){
-                coils[count+count2] = new SquareCoil(2*initialRadius-inner+l, l, precision, current, z);//current is 1 to give results in magnetic field per amp
+                coils[count+count2] = new SquareCoil2(2*initialRadius-inner+l, l, precision, current, z);
                 count2++;
             }
         }
