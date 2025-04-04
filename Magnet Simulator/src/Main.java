@@ -7,7 +7,7 @@ public class Main {
         VectorHandler.printList(test2.getStrength(0,0,0));
         VectorHandler.printList(test.getStrength(0,0,0));
         */
-        SquareCoil2 test3 = new SquareCoil2(25, 50, 100, 1, 0);
+        SquareCoil2 test3 = new SquareCoil2(12.5, 25, 100, -1, 0);
         RoundCoil test4 = new RoundCoil(12.5, 100,1, 0);
         VectorHandler.printList(test3.getStrength(0,0,0));
         VectorHandler.printList(test4.getStrength(0,0,0));
@@ -15,8 +15,8 @@ public class Main {
         for(double r = 0; r<=2; r+=0.1){
             for(double z = 0; z<=2; z+=0.1){
                 double[] magnetStrength = test.getStrength(0,r,z);
-                System.out.print((double)((int)(z*10))/10 + " ");
-                System.out.print((double)((int)(r*10))/10 + " ");
+                System.out.print((double)((int)(z*10+0.5))/10 + " ");
+                System.out.print((double)((int)(r*10+0.5))/10 + " ");
                 if(magnetStrength[1] > 0.00000000001) {
                     System.out.print((int)(magnetStrength[1]*1000000) + " ");
                 } else {

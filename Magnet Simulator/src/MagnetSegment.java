@@ -21,15 +21,15 @@ public class MagnetSegment {
         this.z=z;
         this.angleXY = angleXY;
         this.angleXZ = angleXZ;
-        lengthX = resolveVector(length, angleXY, false);
-        lengthY = resolveVector(length, angleXY, true);
-        lengthZ = resolveVector(lengthX, angleXZ, true);
-        lengthX = resolveVector(lengthX, angleXZ, false);
+        lengthX = VectorHandler.resolveVector(length, angleXY, false);
+        lengthY = VectorHandler.resolveVector(length, angleXY, true);
+        lengthZ = VectorHandler.resolveVector(lengthX, angleXZ, true);
+        lengthX = VectorHandler.resolveVector(lengthX, angleXZ, false);
     }
     public double[] getStrength(double pointX, double pointY, double pointZ){
         double rSquared = Math.pow(pointX-x,2)+Math.pow(pointY-y,2)+Math.pow(pointZ-z,2);
         double[] direction = {pointX-x, pointY-y, pointZ-z};
-        double r = toVector(direction);
+        double r = VectorHandler.toVector(direction);
         for(int i = 0; i<3; i++){
             direction[i] = (direction[i]/r);
         }
