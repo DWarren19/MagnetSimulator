@@ -33,22 +33,22 @@ public class RoundMagnet {
     public RoundMagnet(double length, double split, double inner, double outer, double density, int precision, double initialRadius){
         int sizeZ = (int)Math.round((length-split)*density);
         double incrementZ = (length-split)/sizeZ;
-        int sizeR = (int)Math.round((outer-inner)*density);
+        int sizeR = (int)Math.round((outer-inner)*density/2);//density is halved because inner and outer represent the length, not radius, in this constructor
         double incrementR = (outer-inner)/sizeR;
-        double windings = ((length-split)*density)*((outer-inner)*density);
+        double windings = ((length-split)*density)*((outer-inner)*density/2);
         double current = windings/(sizeZ*sizeR);//current changes to account for nonexistent windings-some windings will have been lost due to rounding errors
         coils = new Coil[sizeZ*sizeR];//total number of windings
         int count = 0;
         for(double z = -length/2+(0.5*incrementZ); z<-split/2; z+=incrementZ){
-            for(double l = inner+(0.5*incrementR); l<outer; l+=incrementR){
-                coils[count] = new SquareCoil2(2*initialRadius-inner+l, l, precision, current, z);
+            for(double l = (0.5*incrementR); l<outer-inner; l+=incrementR){
+                coils[count] = new SquareCoil(initialRadius+l/2, l+inner, precision, -current, z);
                 count++;
             }
         }
         int count2 = 0;
         for(double z = split/2+(0.5*incrementZ); z<length/2; z+=incrementZ){
-            for(double l = inner+(0.5*incrementR); l<outer; l+=incrementR){
-                coils[count+count2] = new SquareCoil2(2*initialRadius-inner+l, l, precision, current, z);
+            for(double l = (0.5*incrementR); l<outer-inner; l+=incrementR){
+                coils[count+count2] = new SquareCoil(initialRadius+l/2, l+inner, precision, -current, z);
                 count2++;
             }
         }
