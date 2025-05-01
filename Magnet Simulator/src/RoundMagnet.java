@@ -31,6 +31,9 @@ public class RoundMagnet {
         }
     }
     public RoundMagnet(double length, double split, double inner, double outer, double density, int precision, double initialRadius){
+        //inner is the inner length (radius*2)
+        //outer is the outer length (radius*2)
+        //initialRadius is the radius of the inside of the corners
         int sizeZ = (int)Math.round((length-split)*density);
         double incrementZ = (length-split)/sizeZ;
         int sizeR = (int)Math.round((outer-inner)*density/2);//density is halved because inner and outer represent the length, not radius, in this constructor
@@ -57,10 +60,10 @@ public class RoundMagnet {
         double[] total = {0, 0, 0};
         //System.out.println(coils.length);//checks how many coils are being analysed (for debugging)
         //System.out.println(coils[coils.length-1]);//make sure this is not null
-        for(int i=0; i<coils.length; i++){
-            total[0] += coils[i].getStrength(x,y,z)[0];
-            total[1] += coils[i].getStrength(x,y,z)[1];
-            total[2] += coils[i].getStrength(x,y,z)[2];
+        for(int i=0; i<coils.length; i++) {
+            total[0] += coils[i].getStrength(x, y, z)[0];
+            total[1] += coils[i].getStrength(x, y, z)[1];
+            total[2] += coils[i].getStrength(x, y, z)[2];
         }
         return total;
     }
