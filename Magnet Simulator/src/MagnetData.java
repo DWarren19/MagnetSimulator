@@ -1,0 +1,35 @@
+public class MagnetData {
+    private boolean square;
+    private String name;
+    private double[] data;
+    //length, split, inner, outer, density, precision;
+    public MagnetData(String inputData) {
+        int dataPosition = 0;
+        int strPosition;
+        name = "";
+        for (strPosition = 2; strPosition < inputData.length(); strPosition++) {
+            if(inputData.charAt(strPosition)=='|'){
+                break;
+            } else {
+                name = name.concat(Character.toString(inputData.charAt(strPosition)));
+            }
+        }
+        if (inputData.charAt(0) == '0'){
+            square = false;
+            data = new double[6];
+            String currentValue = "";
+            for (;strPosition < inputData.length(); strPosition++) {
+                if(inputData.charAt(strPosition)=='|'){
+                    data[dataPosition] = Double.parseDouble(currentValue);
+                    currentValue = "";
+                    dataPosition++;
+                    if(dataPosition == 6){
+                        break;
+                    }
+                } else {
+                    currentValue = currentValue.concat(Character.toString(inputData.charAt(strPosition)));
+                }
+            }
+        }
+    }
+}
