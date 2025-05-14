@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,12 +10,16 @@ public class GUI extends JFrame implements ActionListener {
     private JTextField[] inputs;
     private JButton densityUnits;
     private JLabel densityLabel;
+    private JLabel densityButtonLabel;
+    private JTextField densityInput;
+    private JTextArea crossSectionDiagram;
     private boolean perCm;
 
     public GUI(){
         inputLabels = new JLabel[4];
         inputs = new JTextField[4];
         unitLabels = new JLabel[4];
+
         densityUnits = new JButton();
         densityUnits.setBounds(300, 60, 150, 150);
         add(densityUnits);
@@ -22,6 +28,16 @@ public class GUI extends JFrame implements ActionListener {
         densityLabel = new JLabel();
         densityLabel.setBounds(350, 10, 100, 30);
         add(densityLabel);
+        densityButtonLabel = new JLabel("switch to");
+        densityButtonLabel.setBounds(350, 40, 100, 30);
+        add(densityButtonLabel);
+
+        densityInput = new JTextField();
+        densityInput.setBounds(300, 10, 50, 50);
+        add(densityInput);
+
+        crossSectionDiagram = new JTextArea();
+        crossSectionDiagram.setBounds(10, 400, );
 
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,11 +63,11 @@ public class GUI extends JFrame implements ActionListener {
         if(e.getSource() == densityUnits){
             if(perCm){
                 perCm = false;
-                densityUnits.setText("switch to turns\nper cm^2");
+                densityUnits.setText("turns per cm^2");
                 densityLabel.setText("turns per side");
             } else {
                 perCm = true;
-                densityUnits.setText("switch to turns\nper side");
+                densityUnits.setText("turns per side");
                 densityLabel.setText("turns per cm^2");
             }
         }
