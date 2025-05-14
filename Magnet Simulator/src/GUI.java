@@ -1,10 +1,14 @@
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
-public class GUI extends JFrame implements ActionListener {
+public class GUI extends JFrame implements KeyListener, ActionListener {
     private JLabel[] inputLabels;
     private JLabel[] unitLabels;
     private JTextField[] inputs;
@@ -12,32 +16,55 @@ public class GUI extends JFrame implements ActionListener {
     private JLabel densityLabel;
     private JLabel densityButtonLabel;
     private JTextField densityInput;
-    private JTextArea crossSectionDiagram;
+    private JButton crossSectionDiagram;
+    private JLabel outerRadius;
+    private JLabel innerRadius;
+    private JButton nextButton;
     private boolean perCm;
+    private String[] inputData;
+    private String density;
 
     public GUI(){
+        density = "";
+        inputData = new String[4];
         inputLabels = new JLabel[4];
         inputs = new JTextField[4];
         unitLabels = new JLabel[4];
 
         densityUnits = new JButton();
-        densityUnits.setBounds(300, 60, 150, 150);
+        densityUnits.setBounds(300, 60, 150, 50);
+        densityUnits.setOpaque(false);
+        densityUnits.setBackground(Color.lightGray);
         add(densityUnits);
         densityUnits.addActionListener(this);
 
         densityLabel = new JLabel();
-        densityLabel.setBounds(350, 10, 100, 30);
+        densityLabel.setBounds(350, 20, 100, 30);
         add(densityLabel);
         densityButtonLabel = new JLabel("switch to");
-        densityButtonLabel.setBounds(350, 40, 100, 30);
+        densityButtonLabel.setBounds(350, 55, 100, 30);
         add(densityButtonLabel);
 
         densityInput = new JTextField();
         densityInput.setBounds(300, 10, 50, 50);
+        densityInput.addKeyListener(this);
         add(densityInput);
 
-        crossSectionDiagram = new JTextArea();
-        crossSectionDiagram.setBounds(10, 400, );
+        crossSectionDiagram = new JButton();
+        crossSectionDiagram.setBounds(10, 250, 300, 200);
+        crossSectionDiagram.setBackground(Color.lightGray);
+        crossSectionDiagram.setOpaque(false);
+        add(crossSectionDiagram);
+
+        outerRadius = new JLabel();
+        outerRadius.setBounds(20, 500, 30, 100);
+        outerRadius.setIcon(new ImageIcon());
+        add(outerRadius);
+
+        nextButton = new JButton("Next");
+        nextButton.setBounds(350, 400, 100, 30);
+        add(nextButton);
+        nextButton.addActionListener(this);
 
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -71,5 +98,22 @@ public class GUI extends JFrame implements ActionListener {
                 densityLabel.setText("turns per cm^2");
             }
         }
+        if (e.getSource() == nextButton){
+
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        density += e.getKeyChar();
+        System.out.println(density);
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
     }
 }
