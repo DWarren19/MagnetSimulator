@@ -16,7 +16,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     private JLabel densityLabel;
     private JLabel densityButtonLabel;
     private JTextField densityInput;
-    private JButton crossSectionDiagram;
+    private Diagram crossSectionDiagram;
     private JLabel outerRadius;
     private JLabel innerRadius;
     private JButton nextButton;
@@ -50,10 +50,8 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         densityInput.addKeyListener(this);
         add(densityInput);
 
-        crossSectionDiagram = new JButton();
+        crossSectionDiagram = new Diagram();
         crossSectionDiagram.setBounds(10, 250, 300, 200);
-        crossSectionDiagram.setBackground(Color.lightGray);
-        crossSectionDiagram.setOpaque(false);
         add(crossSectionDiagram);
 
         outerRadius = new JLabel();
