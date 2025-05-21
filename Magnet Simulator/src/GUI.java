@@ -1,7 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -17,12 +14,13 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     private JLabel densityButtonLabel;
     private JTextField densityInput;
     private JButton crossSectionDiagram;
-    private JLabel outerRadius;
-    private JLabel innerRadius;
+    private JButton outerRadius;
+    private JButton innerRadius;
     private JButton nextButton;
     private boolean perCm;
     private String[] inputData;
     private String density;
+    private JLabel diagramLabel;
 
     public GUI(){
         density = "";
@@ -56,15 +54,29 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         crossSectionDiagram.setOpaque(false);
         add(crossSectionDiagram);
 
-        outerRadius = new JLabel();
-        outerRadius.setBounds(20, 500, 30, 100);
-        outerRadius.setIcon(new ImageIcon());
+        diagramLabel = new JLabel("Cross Section");
+        diagramLabel.setBounds(100, 175, 300, 100);
+        add(diagramLabel);
+
+        innerRadius = new JButton();
+        innerRadius.setBounds(30, 325, 30, 50);
+        innerRadius.setBackground(Color.white);
+        add(innerRadius);
+
+        outerRadius = new JButton();
+        outerRadius.setBounds(30, 300, 30, 100);
+        outerRadius.setBackground(Color.lightGray);
         add(outerRadius);
 
         nextButton = new JButton("Next");
         nextButton.setBounds(350, 400, 100, 30);
         add(nextButton);
         nextButton.addActionListener(this);
+
+        crossSectionDiagram = new JButton();
+        crossSectionDiagram.setBounds(10, 250, 300, 200);
+        crossSectionDiagram.setBackground(Color.white);
+        add(crossSectionDiagram);
 
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -105,8 +117,12 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        density += e.getKeyChar();
-        System.out.println(density);
+        if(e.getSource() == densityInput) {
+            density += e.getKeyChar();
+            System.out.println(density);
+        } else if(e.getSource() == inputs[0]) {
+            innerRadius.setBounds(30,350-inputs[3].getText(), 500/inputs[0].getText(), );
+        }
     }
 
     @Override

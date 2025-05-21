@@ -2,7 +2,7 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        GUI test = new GUI();
+        new GUI();
         /*
         RoundMagnet test = new RoundMagnet(10, 2, 20, 30, 1, 100);
         RoundMagnet test2 = new RoundMagnet(10, 2, 40, 60, 1, 100, 20);
