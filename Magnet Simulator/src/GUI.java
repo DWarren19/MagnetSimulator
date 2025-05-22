@@ -50,7 +50,8 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         densityInput.addKeyListener(this);
         add(densityInput);
 
-        crossSectionDiagram = new Diagram();
+        int[] data = {50, 50, 50, 50};
+        crossSectionDiagram = new Diagram(data);
         crossSectionDiagram.setBounds(10, 250, 300, 200);
         add(crossSectionDiagram);
 
@@ -117,5 +118,21 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+    }
+    public int strToInt(String s){
+        int total = 0;
+        int value = 1;
+        char[] numbers = {0,1,2,3,4,5,6,7,8,9};
+        for (int i = s.length()-1; i > 0; i-=1) {
+            for (int n = 0; n < numbers.length; n++) {
+                if(s.charAt(i) == numbers[n]){
+                    total+=n*value;
+                    value*=10;
+                } else if(s.charAt(i) == '.'){
+                    total/=value;
+                    value = 1;
+                }
+            }
+        }
     }
 }
