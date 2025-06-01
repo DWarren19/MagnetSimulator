@@ -4,6 +4,10 @@ public class Main {
     public static void main(String[] args) {
         new GUI();
         /*
+        MagnetData test5 = new MagnetData("0|test|10|2|20|30|1|100|");
+        System.out.println(test5);
+        FileHandler.writeMagnetData(test5);
+        /*
         RoundMagnet test = new RoundMagnet(10, 2, 20, 30, 1, 100);
         RoundMagnet test2 = new RoundMagnet(10, 2, 40, 60, 1, 100, 20);
         VectorHandler.printList(test2.getStrength(0,0,0));

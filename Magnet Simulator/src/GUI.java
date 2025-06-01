@@ -1,7 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,12 +18,10 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     private JLabel innerRadius;
     private JButton nextButton;
     private boolean perCm;
-    private String[] inputData;
     private String density;
 
     public GUI(){
         density = "";
-        inputData = new String[4];
         inputLabels = new JLabel[4];
         inputs = new JTextField[4];
         unitLabels = new JLabel[4];
@@ -50,7 +45,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         densityInput.addKeyListener(this);
         add(densityInput);
 
-        int[] data = {50, 50, 50, 50};
+        double[] data = {0, 0, 0, 0};
         crossSectionDiagram = new Diagram(data);
         crossSectionDiagram.setBounds(10, 250, 300, 200);
         add(crossSectionDiagram);
@@ -74,6 +69,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             inputs[i] = new JTextField();
             inputs[i].setBounds(10, 50*i, 55, 50);
             inputs[i].setOpaque(false);
+            inputs[i].addKeyListener(this);
             add(inputs[i]);
             unitLabels[i] = new JLabel("cm");
             unitLabels[i].setBounds(40, 50*i, 50, 50);
@@ -83,6 +79,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             add(inputLabels[i]);
         }
         setVisible(true);
+        crossSectionDiagram.setMagnetData(data);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -107,8 +104,17 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         if(e.getSource() == densityInput) {
             density += e.getKeyChar();
             System.out.println(density);
-        } else if(e.getSource() == inputs[0]) {
-            innerRadius.setBounds(30,350-inputs[3].getText(), 500/inputs[0].getText(), );
+        } else {
+            for (int n = 0; n < 4; n++) {
+                if(e.getSource() == inputs[n]) {
+                    double[] inputData = new double[4];
+                    for (int i = 0; i < inputData.length; i++) {
+                        inputData[i] = strToInt(inputs[i].getText());
+                    }
+                    inputData[n] = strToInt(inputs[n].getText()+e.getKeyChar());
+                    crossSectionDiagram.setMagnetData(inputData);
+                }
+            }
         }
     }
 
@@ -119,11 +125,11 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     @Override
     public void keyReleased(KeyEvent e) {
     }
-    public int strToInt(String s){
-        int total = 0;
+    public double strToInt(String s){
+        double total = 0;
         int value = 1;
-        char[] numbers = {0,1,2,3,4,5,6,7,8,9};
-        for (int i = s.length()-1; i > 0; i-=1) {
+        char[] numbers = {'0','1','2','3','4','5','6','7','8','9'};
+        for (int i = s.length()-1; i >= 0; i-=1) {
             for (int n = 0; n < numbers.length; n++) {
                 if(s.charAt(i) == numbers[n]){
                     total+=n*value;
@@ -134,5 +140,6 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
                 }
             }
         }
+        return total;
     }
 }

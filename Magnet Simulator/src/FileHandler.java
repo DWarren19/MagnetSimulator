@@ -5,9 +5,9 @@ import java.io.PrintWriter;
 import java.io.FileReader;
 
 public class FileHandler {
-    public static String writeMagnetData(String fileName, String data){
+    public static String writeMagnetData(MagnetData data){
         try (
-                FileWriter fw = new FileWriter(fileName);
+                FileWriter fw = new FileWriter(data.getName()+"MagnetData");
                 PrintWriter pw = new PrintWriter(fw);
                 ) {
             pw.println(data);
@@ -16,14 +16,14 @@ public class FileHandler {
             return "data not written";
         }
     }
-    public static String readMagnetData(String fileName){
+    public static MagnetData readMagnetData(String fileName){
         try (
                 FileReader fr = new FileReader(fileName);
                 BufferedReader br = new BufferedReader(fr);
         ) {
-            return br.readLine();
+            return new MagnetData(br.readLine());
         } catch (IOException e) {
-            return "data not found";
+            return null;
         }
     }
 }
