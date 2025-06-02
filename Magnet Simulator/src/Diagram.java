@@ -35,13 +35,13 @@ public class Diagram extends JPanel {
         g2.setColor(Color.white);
         g2.fillRect(1, 1, super.getWidth()-2, super.getHeight()-2);
         g2.setColor(Color.black);
-        g2.fillRect(150-magnetWidth/2, 100-(int)d[3], (int)((140-d[1]/2)*magnetWidth/280), (int)d[3]*2);
+        g2.fillRect(150-magnetWidth/2, 100-(int)d[3], (int)(magnetWidth/2-d[1]), (int)d[3]*2);
         g2.setColor(Color.lightGray);
-        g2.fillRect(150-magnetWidth/2, 100-(int)d[2], (int)((140-d[1]/2)*magnetWidth/280), (int)d[2]*2);
+        g2.fillRect(150-magnetWidth/2, 100-(int)d[2], (int)(magnetWidth/2-d[1]), (int)d[2]*2);
         g2.setColor(Color.black);
-        g2.fillRect(150+(int)(d[1]*magnetWidth/560), 100-(int)d[3], (int)((140-d[1]/2)*magnetWidth/280), (int)d[3]*2);
+        g2.fillRect(150+(int)(d[1]), 100-(int)d[3], (int)(magnetWidth/2-d[1]), (int)d[3]*2);
         g2.setColor(Color.lightGray);
-        g2.fillRect(150+(int)(d[1]*magnetWidth/560), 100-(int)d[2], (int)((140-d[1]/2)*magnetWidth/280), (int)d[2]*2);
+        g2.fillRect(150+(int)(d[1]), 100-(int)d[2], (int)(magnetWidth/2-d[1]), (int)d[2]*2);
     }
     public void paintComponent(Graphics g){
         super.paintComponents(g);

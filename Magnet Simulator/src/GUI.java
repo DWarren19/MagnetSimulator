@@ -19,6 +19,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     private JButton nextButton;
     private boolean perCm;
     private String density;
+    double[] inputData;
 
     public GUI(){
         density = "";
@@ -26,14 +27,14 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         inputs = new JTextField[4];
         unitLabels = new JLabel[4];
 
-        densityUnits = new JButton();
+        densityUnits = new JButton("turns per cm^2");
         densityUnits.setBounds(300, 60, 150, 50);
         densityUnits.setOpaque(false);
         densityUnits.setBackground(Color.lightGray);
         add(densityUnits);
         densityUnits.addActionListener(this);
 
-        densityLabel = new JLabel();
+        densityLabel = new JLabel("turns per side");
         densityLabel.setBounds(350, 20, 100, 30);
         add(densityLabel);
         densityButtonLabel = new JLabel("switch to");
@@ -59,6 +60,9 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         nextButton.setBounds(350, 400, 100, 30);
         add(nextButton);
         nextButton.addActionListener(this);
+
+        perCm = false;
+        inputData = new double[4];
 
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,7 +99,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             }
         }
         if (e.getSource() == nextButton){
-
+            RoundCoil magnet = new RoundMagnet(inputData[0], inputData[1], );
         }
     }
 
@@ -107,7 +111,6 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         } else {
             for (int n = 0; n < 4; n++) {
                 if(e.getSource() == inputs[n]) {
-                    double[] inputData = new double[4];
                     for (int i = 0; i < inputData.length; i++) {
                         inputData[i] = strToInt(inputs[i].getText());
                     }
