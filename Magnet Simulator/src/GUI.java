@@ -14,18 +14,24 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     private JLabel densityButtonLabel;
     private JTextField densityInput;
     private Diagram crossSectionDiagram;
-    private JLabel outerRadius;
-    private JLabel innerRadius;
     private JButton nextButton;
     private boolean perCm;
     private String density;
     double[] inputData;
 
     public GUI(){
+        String[] inputNames =  {"Length (L)", "Split Length (S)", "Inner Radius (IR)", "Outer Radius (OR)"};
+        setUpGui(inputNames);
+    }
+
+    public GUI(String[] inputNames) {
+        setUpGui(inputNames);
+    }
+    public void setUpGui(String[] inputNames){
         density = "";
-        inputLabels = new JLabel[4];
-        inputs = new JTextField[4];
-        unitLabels = new JLabel[4];
+        inputLabels = new JLabel[inputNames.length];
+        inputs = new JTextField[inputNames.length];
+        unitLabels = new JLabel[inputNames.length];
 
         densityUnits = new JButton("turns per cm^2");
         densityUnits.setBounds(300, 60, 150, 50);
@@ -51,24 +57,18 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         crossSectionDiagram.setBounds(10, 250, 300, 200);
         add(crossSectionDiagram);
 
-        outerRadius = new JLabel();
-        outerRadius.setBounds(20, 500, 30, 100);
-        outerRadius.setIcon(new ImageIcon());
-        add(outerRadius);
-
         nextButton = new JButton("Next");
         nextButton.setBounds(350, 400, 100, 30);
         add(nextButton);
         nextButton.addActionListener(this);
 
         perCm = false;
-        inputData = new double[4];
+        inputData = new double[inputs.length];
 
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(500, 500);
         setLayout(null);
-        String[] inputNames = {"Length (L)", "Split Length (S)", "Inner Radius (IR)", "Outer Radius (OR)"};
         for (int i = 0; i < inputs.length; i++) {
             inputs[i] = new JTextField();
             inputs[i].setBounds(10, 50*i, 55, 50);
@@ -99,7 +99,14 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             }
         }
         if (e.getSource() == nextButton){
-            RoundCoil magnet = new RoundMagnet(inputData[0], inputData[1], );
+            double densityCm;
+            if (perCm){
+                densityCm = strToInt(density);
+            } else {
+                densityCm = strToInt(density)/((inputData[0]-inputData[1])*(inputData[2]-inputData[3]));
+            }
+            RoundMagnet magnet = new RoundMagnet(inputData[0], inputData[1], inputData[2], inputData[3], densityCm, 100);
+            setVisible(false);
         }
     }
 
@@ -109,7 +116,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             density += e.getKeyChar();
             System.out.println(density);
         } else {
-            for (int n = 0; n < 4; n++) {
+            for (int n = 0; n < inputs.length; n++) {
                 if(e.getSource() == inputs[n]) {
                     for (int i = 0; i < inputData.length; i++) {
                         inputData[i] = strToInt(inputs[i].getText());
