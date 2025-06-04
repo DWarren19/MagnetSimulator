@@ -18,6 +18,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     private boolean perCm;
     private String density;
     double[] inputData;
+    private JLabel[] diagramLabels;
 
     public GUI(){
         String[] inputNames =  {"Length (L)", "Split Length (S)", "Inner Radius (IR)", "Outer Radius (OR)"};
@@ -54,8 +55,11 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
 
         double[] data = {0, 0, 0, 0};
         crossSectionDiagram = new Diagram(data);
-        crossSectionDiagram.setBounds(10, 250, 310, 200);
+        crossSectionDiagram.setBounds(10, 250, 330, 200);
         add(crossSectionDiagram);
+
+        diagramLabels = new JLabel[4];
+        String[] diagramLabelString = {"IR", "OR", "L", "S"};
 
         nextButton = new JButton("Next");
         nextButton.setBounds(350, 400, 100, 30);
@@ -84,6 +88,10 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         }
         setVisible(true);
         crossSectionDiagram.setMagnetData(data);
+        diagramLabels[0] = new JLabel(diagramLabelString[0]);
+        diagramLabels[0].setBounds(320, 350, 50, 50);
+        diagramLabels[1] = new JLabel(diagramLabelString[1]);
+        diagramLabels[1].setBounds(20, 350, 50, 50);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
