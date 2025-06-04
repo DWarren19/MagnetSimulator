@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class Diagram extends JPanel {
     public double[] data;
+    private JLabel outerRadius = new JLabel();
     public Diagram(double[] d){
         super();
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -35,13 +36,15 @@ public class Diagram extends JPanel {
         g2.setColor(Color.white);
         g2.fillRect(1, 1, super.getWidth()-2, super.getHeight()-2);
         g2.setColor(Color.black);
-        g2.fillRect(150-magnetWidth/2, 100-(int)d[3], (int)(magnetWidth/2-d[1]), (int)d[3]*2);
+        g2.fillRect(160-magnetWidth/2, 100-(int)d[3], (int)(magnetWidth/2-d[1]), (int)d[3]*2);
+        g2.fillRect(160-magnetWidth/2-14, 120-(int)d[3], 8, (int)d[3]-20);
+        g2.fillPolygon(new int[]{160-magnetWidth/2-19, 160-magnetWidth/2-1, 160-magnetWidth/2-10}, new int[]{120-(int)d[3], 120-(int)d[3], 100-(int)d[3]}, 3);
         g2.setColor(Color.lightGray);
-        g2.fillRect(150-magnetWidth/2, 100-(int)d[2], (int)(magnetWidth/2-d[1]), (int)d[2]*2);
+        g2.fillRect(160-magnetWidth/2, 100-(int)d[2], (int)(magnetWidth/2-d[1]), (int)d[2]*2);
         g2.setColor(Color.black);
-        g2.fillRect(150+(int)(d[1]), 100-(int)d[3], (int)(magnetWidth/2-d[1]), (int)d[3]*2);
+        g2.fillRect(160+(int)(d[1]), 100-(int)d[3], (int)(magnetWidth/2-d[1]), (int)d[3]*2);
         g2.setColor(Color.lightGray);
-        g2.fillRect(150+(int)(d[1]), 100-(int)d[2], (int)(magnetWidth/2-d[1]), (int)d[2]*2);
+        g2.fillRect(160+(int)(d[1]), 100-(int)d[2], (int)(magnetWidth/2-d[1]), (int)d[2]*2);
     }
     public void paintComponent(Graphics g){
         super.paintComponents(g);

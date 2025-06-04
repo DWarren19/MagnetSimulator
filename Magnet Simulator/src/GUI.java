@@ -54,7 +54,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
 
         double[] data = {0, 0, 0, 0};
         crossSectionDiagram = new Diagram(data);
-        crossSectionDiagram.setBounds(10, 250, 300, 200);
+        crossSectionDiagram.setBounds(10, 250, 310, 200);
         add(crossSectionDiagram);
 
         nextButton = new JButton("Next");
