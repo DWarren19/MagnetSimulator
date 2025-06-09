@@ -17,7 +17,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     private JButton nextButton;
     private boolean perCm;
     private String density;
-    double[] inputData;
+    protected double[] inputData;
 
     public GUI(){
         String[] inputNames =  {"Length (L)", "Split Length (S)", "Inner Radius (IR)", "Outer Radius (OR)"};
@@ -66,7 +66,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
 
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 500);
+        setSize(500, 550);
         setLayout(null);
         for (int i = 0; i < inputs.length; i++) {
             inputs[i] = new JTextField();

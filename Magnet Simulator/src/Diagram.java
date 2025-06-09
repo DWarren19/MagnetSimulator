@@ -11,7 +11,7 @@ public class Diagram extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.black));
         data = d;
         this.outputData = d;
-        setBounds(10, 250, 330, 220);
+        setBounds(10, 250, 330, 250);
         outputLabels = new JLabel[4];
         String[] labelData = {"IR", "OR", "L", "S"};
         for (int i = 0; i < 4; i++) {
@@ -21,6 +21,7 @@ public class Diagram extends JPanel {
     }
     public void setMagnetData(double[] d) {
         Graphics g = super.getGraphics();
+        d = d.clone();
         data = d;
         this.outputData = d;
         if (data[0] == 0) {
@@ -65,6 +66,13 @@ public class Diagram extends JPanel {
         outputLabels[0].setBounds(160+(magnetWidth/2)+5, 100-(int) outputData[2], 20, 20);
         outputLabels[1].setBounds(160-(magnetWidth/2)-19, 100-(int) outputData[3], 20, 20);
 
-        g2.fillRect(160-magnetWidth/2, 200, magnetWidth, 10);
+        g2.fillRect(180-magnetWidth/2, 225, magnetWidth-40, 10);
+        g2.fillPolygon(new int[]{160-magnetWidth/2, 180-magnetWidth/2, 180-magnetWidth/2}, new int[]{230, 220, 240}, 3);
+        g2.fillPolygon(new int[]{160+magnetWidth/2, 140+magnetWidth/2, 140+magnetWidth/2}, new int[]{230, 220, 240}, 3);
+        outputLabels[2].setBounds(160, 220, 20, 20);
+        g2.fillRect(180-(int)outputData[1], 200, (int)outputData[1]*2-40, 10);
+        g2.fillPolygon(new int[]{160-(int)outputData[1], 180-(int)outputData[1], 180-(int)outputData[1]}, new int[]{205, 195, 215}, 3);
+        g2.fillPolygon(new int[]{160+(int)outputData[1], 140+(int)outputData[1], 140+(int)outputData[1]}, new int[]{205, 195, 215}, 3);
+        outputLabels[3].setBounds(160, 195, 20, 20);
     }
 }
