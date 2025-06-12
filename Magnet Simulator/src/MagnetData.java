@@ -2,7 +2,12 @@ public class MagnetData {
     private boolean square;
     private String name;
     private double[] data;
-    //length, split, inner, outer, density, precision;
+    //length, split, inner, outer, density, precision
+    public MagnetData(double[] d, boolean s, String n){
+        data = d;
+        name = n;
+        square = s;
+    }
     public MagnetData(String inputData) {
         int dataPosition = 0;
         int strPosition;

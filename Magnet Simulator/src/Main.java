@@ -2,7 +2,7 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        new SquareMagnetGUI();
+        new GUI();
         /*
         MagnetData test5 = new MagnetData("0|test|10|2|20|30|1|100|");
         System.out.println(test5);

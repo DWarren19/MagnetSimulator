@@ -6,9 +6,8 @@ public class RoundMagnet {
         //inner is the inner radius
         //outer is the outer radius
         //density is per cm (take the square root of density per cm**2)
-        int sizeZ = (int)Math.round((length-split)*density);
+        int sizeZ = ((int)Math.round((length-split)*density/2))*2;
         double incrementZ = (length-split)/sizeZ;
-        //System.out.println(density);
         //System.out.println(1/incrementZ);
         int sizeR = (int)Math.round((outer-inner)*density);
         double incrementR = (outer-inner)/sizeR;
