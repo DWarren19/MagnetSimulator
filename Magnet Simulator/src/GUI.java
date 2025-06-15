@@ -20,16 +20,20 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     private boolean round;
     protected double[] inputData;
     private RoundMagnet magnet;
+    private JButton save;
+    private LoginGUI previous;
 
-    public GUI(){
+    public GUI(LoginGUI p){
         String[] inputNames =  {"Length (L)", "Split Length (S)", "Inner Radius (IR)", "Outer Radius (OR)"};
         round = true;
         setUpGui(inputNames);
+        previous = p;
     }
 
-    public GUI(String[] inputNames, boolean r) {
+    public GUI(String[] inputNames, boolean r, LoginGUI p) {
         setUpGui(inputNames);
         round = r;
+        previous = p;
     }
     public void setUpGui(String[] inputNames){
         density = "";
@@ -61,9 +65,14 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         add(crossSectionDiagram);
 
         nextButton = new JButton("Next");
-        nextButton.setBounds(350, 400, 100, 30);
+        nextButton.setBounds(350, 430, 100, 30);
         add(nextButton);
         nextButton.addActionListener(this);
+
+        save = new JButton("Save");
+        save.setBounds(350, 390, 100, 30);
+        add(save);
+        save.addActionListener(this);
 
         perCm = false;
         inputData = new double[inputs.length];
@@ -101,7 +110,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
                 densityLabel.setText("turns per cm^2");
             }
         }
-        if (e.getSource() == nextButton){
+        if (e.getSource() == nextButton && strToInt(density)!=0 && inputData[0]!=0 && inputData[3]!=0){
             double densityCm;
             if (perCm){
                 densityCm = Math.sqrt(strToInt(density));
@@ -115,6 +124,13 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             }
             SimulationGUI nextGUI = new SimulationGUI(inputData, densityCm, crossSectionDiagram, this, magnet);
             setVisible(false);
+        } else if (e.getSource() == save){
+            double[] outputData = new double[inputData.length+1];
+            for (int i = 0; i < inputData.length; i++) {
+                outputData[i] = inputData[i];
+            }
+            outputData[inputData.length] = strToInt(density);
+            MagnetDataWindow saveData = new MagnetDataWindow(getX(), getY(), outputData);
         }
     }
 

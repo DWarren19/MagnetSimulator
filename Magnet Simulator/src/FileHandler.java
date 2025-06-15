@@ -26,4 +26,24 @@ public class FileHandler {
             return null;
         }
     }
+    public static String write3dArray(double[][][] a, String name){
+        try (
+                FileWriter fw = new FileWriter(name+".txt");
+                PrintWriter pw = new PrintWriter(fw);
+        ) {
+            for(double[][] b: a){
+                for(double[] c: b){
+                    for(double d: c){
+                        pw.print(d);
+                        pw.print('|');
+                    }
+                    pw.println();
+                }
+                pw.println();
+            }
+            return "data written successfully";
+        } catch (IOException e) {
+            return "data not written";
+        }
+    }
 }

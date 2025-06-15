@@ -4,7 +4,6 @@ import java.awt.event.*;
 
 public class SimulationGUI extends JFrame implements KeyListener, ActionListener, MouseListener {
     private double[] data;
-    private double density;
     private RoundMagnet magnet;
     private Diagram magnetDiagram;
     private JTextField[] inputs;
@@ -37,8 +36,11 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
     private JLabel progressLabel2;
 
     public SimulationGUI(double[] d, double density, Diagram m, GUI p, RoundMagnet r){
-        this.density = density;
-        data = d;
+        data = new double[d.length+1];
+        for (int i = 0; i < d.length; i++) {
+            data[i] = d[i];
+        }
+        data[d.length] = density;
         magnetDiagram = m;
         previous = p;
         inputs = new JTextField[2];
@@ -136,9 +138,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
                         stop = true;
                         stopSimulation = true;
                         progress.setValue(0);
-                        homogeneity.setText(String.valueOf((int)(100*(highest-lowest)/(highest)))+"  %");
-                        System.out.println(highest);
-                        System.out.println(lowest);
+                        homogeneity.setText(((float)(int)(10000 * (highest - lowest) / (highest)))/100 +"  %");
                     }
                 }
             }
@@ -179,6 +179,9 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttons[0]){
+            if (resolution/2 != (int)resolution/2){
+                resolution+=1;
+            }
             stop = false;
             stopSimulation = false;
             highest = VectorHandler.toVector(magnet.getStrength(0, 0, 0));
@@ -197,11 +200,13 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             magneticField.setText(String.valueOf(outputValue));
             orderOfMagnitude.setText(String.valueOf(orderOfMagnitudeInt));
             lowest = highest;
-            magneticFieldData = new double[(int)(diameter*resolution)/2+1][(int)(diameter*resolution)/2+1][(int)(diameter*resolution)/2+1];
             x = 0;
             y = 0;
             z = 0;
-            simulateMagnet();
+            if (diameter != 0 && resolution != 0) {
+                magneticFieldData = new double[(int)(diameter*resolution)/2+1][(int)(diameter*resolution)/2+1][(int)(diameter*resolution)/2+1];
+                simulateMagnet();
+            }
             //LoadingScreen loading = new LoadingScreen(getX(), getY(), (int)Math.pow((resolution*diameter)+1, 3)/2);
             //while (!stop){//the value for homogeneity here will be a slight underestimate, since the area is a cube, not a sphere
 
@@ -211,14 +216,26 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
         } else if (e.getSource() == buttons[1]){
             stopSimulation = true;
             progress.setValue(0);
+            magneticFieldData = null;
         } else if (e.getSource() == buttons[2]){
             previous.setVisible(true);
             magnetDiagram.setDiameter(0);
             previous.add(magnetDiagram);
             previous.setBounds(getBounds());
-            setVisible(false);
+            dispose();
         } else if (e.getSource() == buttons[3]){
-
+            if(magneticFieldData != null) {
+                OutputDataWindow outputWindow = new OutputDataWindow(getX(), getY(), magneticFieldData);
+            } else {
+                JFrame outputWindow = new JFrame("Magnet Simulator");
+                outputWindow.setBounds(getX(), getY(), 300, 100);
+                outputWindow.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                outputWindow.setLayout(null);
+                outputWindow.setVisible(true);
+                JLabel outputText = new JLabel("please press 'Run' to generate magnetic field data");
+                outputText.setBounds(0, 0, 300, 50);
+                outputWindow.add(outputText);
+            }
         } else if (e.getSource() == buttons[4]){
 
         }

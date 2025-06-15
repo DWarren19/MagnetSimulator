@@ -69,4 +69,7 @@ public class MagnetData {
     public String getName(){
         return name;
     }
+    public void setName(String s){
+        name = s;
+    }
 }
