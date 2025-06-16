@@ -3,6 +3,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.FileReader;
+import java.util.ArrayList;
 
 public class FileHandler {
     public static String writeMagnetData(MagnetData data){
@@ -22,6 +23,25 @@ public class FileHandler {
                 BufferedReader br = new BufferedReader(fr);
         ) {
             return new MagnetData(br.readLine());
+        } catch (IOException e) {
+            return null;
+        }
+    }
+    public String[] readMagnetArray(String name){
+        try (
+                FileReader fr = new FileReader(name);
+                BufferedReader br = new BufferedReader(fr);
+        ) {
+            ArrayList<String> data = new ArrayList<>();
+            String line = "null";
+            while (!line.isEmpty()){
+                line = br.readLine();
+                int position = 0;
+                while(line.charAt(position) != '|'){
+                    position += 1;
+                }
+
+            }
         } catch (IOException e) {
             return null;
         }

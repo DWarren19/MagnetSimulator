@@ -127,6 +127,8 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             } else if (s < lowest){
                 lowest = s;
             }
+            magneticFieldData[(int) (x * resolution)][(int) (y * resolution)][(int) (z * resolution)] = s;
+            progress.setValue((int)(100*((z+y/(resolution*diameter/2))/(diameter/2))));
             x += 1/resolution;
             if (x > diameter/2){
                 x = 0;
@@ -141,10 +143,6 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
                         homogeneity.setText(((float)(int)(10000 * (highest - lowest) / (highest)))/100 +"  %");
                     }
                 }
-            }
-            if (!stop) {
-                magneticFieldData[(int) (x * resolution)][(int) (y * resolution)][(int) (z * resolution)] = s;
-                progress.setValue((int)(100*((z+y/(resolution*diameter/2))/(diameter/2))));
             }
             progress.update(progress.getGraphics());
             if(getMousePosition()!=null) {
