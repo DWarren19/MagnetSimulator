@@ -27,7 +27,7 @@ public class FileHandler {
             return null;
         }
     }
-    public String[] readMagnetArray(String name){
+    public static String[] readMagnetArray(String name){
         try (
                 FileReader fr = new FileReader(name);
                 BufferedReader br = new BufferedReader(fr);
@@ -40,8 +40,13 @@ public class FileHandler {
                 while(line.charAt(position) != '|'){
                     position += 1;
                 }
-
+                data.add(line.substring(0, position));
             }
+            String[] dataArray = new String[data.size()];
+            for (int i = 0; i < dataArray.length; i++) {
+                dataArray[i] = data.get(i);
+            }
+            return dataArray;
         } catch (IOException e) {
             return null;
         }

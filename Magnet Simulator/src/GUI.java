@@ -22,6 +22,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     private RoundMagnet magnet;
     private JButton save;
     private LoginGUI previous;
+    private JButton back;
 
     public GUI(LoginGUI p){
         String[] inputNames =  {"Length (L)", "Split Length (S)", "Inner Radius (IR)", "Outer Radius (OR)"};
@@ -74,6 +75,11 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         add(save);
         save.addActionListener(this);
 
+        back = new JButton("Back");
+        back.setBounds(350, 470, 100, 30);
+        add(back);
+        back.addActionListener(this);
+
         perCm = false;
         inputData = new double[inputs.length];
 
@@ -111,19 +117,21 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             }
         }
         if (e.getSource() == nextButton && strToInt(density)!=0 && inputData[0]!=0 && inputData[3]!=0){
-            double densityCm;
-            if (perCm){
-                densityCm = Math.sqrt(strToInt(density));
-            } else {
-                densityCm = Math.sqrt(strToInt(density)/((inputData[0]-inputData[1])*(inputData[3]-inputData[2])/2));
+            if (strToInt(density) > (inputData[0]-inputData[1])*(inputData[3]-inputData[2])) {
+                double densityCm;
+                if (perCm) {
+                    densityCm = Math.sqrt(strToInt(density));
+                } else {
+                    densityCm = Math.sqrt(strToInt(density) / ((inputData[0] - inputData[1]) * (inputData[3] - inputData[2]) / 2));
+                }
+                if (round) {
+                    magnet = new RoundMagnet(inputData[0], inputData[1], inputData[2], inputData[3], densityCm, 100);
+                } else {
+                    magnet = new RoundMagnet(inputData[0], inputData[1], inputData[2], inputData[3], densityCm, 100, inputData[4]);
+                }
+                SimulationGUI nextGUI = new SimulationGUI(inputData, densityCm, crossSectionDiagram, this, magnet);
+                setVisible(false);
             }
-            if (round) {
-                magnet = new RoundMagnet(inputData[0], inputData[1], inputData[2], inputData[3], densityCm, 100);
-            } else {
-                magnet = new RoundMagnet(inputData[0], inputData[1], inputData[2], inputData[3], densityCm, 100, inputData[4]);
-            }
-            SimulationGUI nextGUI = new SimulationGUI(inputData, densityCm, crossSectionDiagram, this, magnet);
-            setVisible(false);
         } else if (e.getSource() == save){
             double[] outputData = new double[inputData.length+1];
             for (int i = 0; i < inputData.length; i++) {
@@ -131,6 +139,9 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             }
             outputData[inputData.length] = strToInt(density);
             MagnetDataWindow saveData = new MagnetDataWindow(getX(), getY(), outputData);
+        } else if (e.getSource() == back){
+            previous.setVisible(true);
+            dispose();
         }
     }
 

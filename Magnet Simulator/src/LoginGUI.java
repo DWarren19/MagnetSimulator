@@ -38,6 +38,8 @@ public class LoginGUI extends JFrame implements ActionListener {
             SquareMagnetGUI magnetDetails = new SquareMagnetGUI(this);
             setVisible(false);
         } else if (e.getSource() == saved){
+            FileHandlerGUI magnetDetails = new FileHandlerGUI(this);
+            setVisible(false);
         }
     }
 }
