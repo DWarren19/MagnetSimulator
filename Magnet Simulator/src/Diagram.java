@@ -7,7 +7,7 @@ public class Diagram extends JPanel {
     public double[] outputData;
     public JLabel[] outputLabels;
     public int square;
-    public int diameter;
+    public double diameter;
     public Diagram(double[] d, boolean r){
         super();
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -29,7 +29,7 @@ public class Diagram extends JPanel {
         }
     }
     public void setDiameter(int d){
-        diameter = (int)(d*outputData[1]/data[1]);
+        diameter = d*outputData[1]/data[1];
         repaint();
     }
     public void setMagnetData(double[] d) {
@@ -91,6 +91,6 @@ public class Diagram extends JPanel {
         outputLabels[3].setBounds(160, 195, 20, 20);
 
         g2.setColor(Color.darkGray);
-        g2.fillOval(160-diameter, 100-diameter, diameter*2, diameter*2);
+        g2.fillOval(160-(int)diameter, 100-(int)diameter, (int)diameter*2, (int)diameter*2);
     }
 }

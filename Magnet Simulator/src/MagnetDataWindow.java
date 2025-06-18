@@ -19,7 +19,7 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
         label1 = new JLabel("Save data about the magnet (length, radius etc.) to a file?");
         label1.setBounds(0, 0, 400, 15);
         add(label1);
-        label2 = new JLabel("File Name");
+        label2 = new JLabel("Magnet Name");
         label2.setBounds(75, 25, 100, 15);
         add(label2);
         saveData = new JButton("save");
@@ -36,7 +36,7 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!data.getName().isEmpty()){
-            FileHandler.writeMagnetData(data);
+            FileHandler.writeMagnetData(data, "Magnet Data");
             dispose();
         }
     }

@@ -6,12 +6,23 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class FileHandler {
-    public static String writeMagnetData(MagnetData data){
+    public static String writeMagnetData(MagnetData data, String fileName){
+        String currentData = "";
         try (
-                FileWriter fw = new FileWriter(data.getName()+"MagnetData");
+                FileReader fr = new FileReader(fileName);
+                BufferedReader br = new BufferedReader(fr);
+        ) {
+            for (String nextLine = br.readLine(); nextLine != null; nextLine = br.readLine()) {
+                currentData = currentData.concat(nextLine+'\n');
+            }
+        } catch (IOException e) {
+            return "data not written";
+        }
+        try (
+                FileWriter fw = new FileWriter(fileName);
                 PrintWriter pw = new PrintWriter(fw);
                 ) {
-            pw.println(data);
+            pw.println(currentData+data.toString());
             return "data written successfully";
         } catch (IOException e) {
             return "data not written";
@@ -33,8 +44,8 @@ public class FileHandler {
                 BufferedReader br = new BufferedReader(fr);
         ) {
             ArrayList<String> data = new ArrayList<>();
-            String line = "null";
-            while (!line.isEmpty()){
+            String line = br.readLine();
+            while (line != null){
                 line = br.readLine();
                 int position = 0;
                 while(line.charAt(position) != '|'){
