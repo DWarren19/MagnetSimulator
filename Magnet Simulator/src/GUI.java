@@ -21,10 +21,10 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     protected double[] inputData;
     private RoundMagnet magnet;
     private JButton save;
-    private LoginGUI previous;
+    private JFrame previous;
     private JButton back;
 
-    public GUI(LoginGUI p){
+    public GUI(JFrame p){
         String[] inputNames =  {"Length (L)", "Split Length (S)", "Inner Radius (IR)", "Outer Radius (OR)"};
         round = true;
         setUpGui(inputNames);

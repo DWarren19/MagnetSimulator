@@ -28,12 +28,19 @@ public class FileHandler {
             return "data not written";
         }
     }
-    public static MagnetData readMagnetData(String fileName){
+    public static MagnetData readMagnetData(String fileName, String name){
         try (
                 FileReader fr = new FileReader(fileName);
                 BufferedReader br = new BufferedReader(fr);
         ) {
-            return new MagnetData(br.readLine());
+            MagnetData data = new MagnetData(br.readLine());
+            while (data != null){
+                if (data.getName().equals(name)) {
+                    return data;
+                }
+                data = new MagnetData(br.readLine());
+            }
+            return null;
         } catch (IOException e) {
             return null;
         }
@@ -46,12 +53,19 @@ public class FileHandler {
             ArrayList<String> data = new ArrayList<>();
             String line = br.readLine();
             while (line != null){
-                line = br.readLine();
+                int startPosition = 0;
                 int position = 0;
+                while(line.charAt(position) != '|'){
+                    startPosition += 1;
+                    position += 1;
+                }
+                startPosition += 1;
+                position += 1;
                 while(line.charAt(position) != '|'){
                     position += 1;
                 }
-                data.add(line.substring(0, position));
+                data.add(line.substring(startPosition, position));
+                line = br.readLine();
             }
             String[] dataArray = new String[data.size()];
             for (int i = 0; i < dataArray.length; i++) {

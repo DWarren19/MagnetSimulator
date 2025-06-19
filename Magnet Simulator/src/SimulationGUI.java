@@ -12,7 +12,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
     private JButton[] buttons;
     private String[] buttonNames;
     private JLabel buttonLabel;
-    private GUI previous;
+    private JFrame previous;
     private JLabel magneticFieldLabel;
     private JLabel homogeneityLabel;
     private JLabel magneticFieldUnits;
@@ -35,7 +35,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
     private JLabel progressLabel;
     private JLabel progressLabel2;
 
-    public SimulationGUI(double[] d, double density, Diagram m, GUI p, RoundMagnet r){
+    public SimulationGUI(double[] d, double density, Diagram m, JFrame p, RoundMagnet r){
         data = new double[d.length+1];
         for (int i = 0; i < d.length; i++) {
             data[i] = d[i];

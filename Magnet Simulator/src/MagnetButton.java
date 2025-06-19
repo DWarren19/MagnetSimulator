@@ -8,32 +8,47 @@ public class MagnetButton extends JButton implements ActionListener {
     private JButton deleteButton;
     private JButton editButton;
     private JButton duplicateButton;
-    public MagnetButton(String n) {
+    private FileHandlerGUI previous;
+    private String filename;
+    public MagnetButton(String n, FileHandlerGUI p, String f) {
         super();
+        previous = p;
+        filename = f;
         addActionListener(this);
-        setSize(300, 50);
+        setSize(450, 50);
         name = new JLabel(n);
-        name.setBounds(10, 20, 100, 10);
+        name.setBounds(10, 20, 100, 20);
         add(name);
 
         deleteButton = new JButton("Delete");
-        deleteButton.setBounds(120, 15, 50, 20);
+        deleteButton.setBounds(120, 15, 100, 20);
         deleteButton.addActionListener(this);
         add(deleteButton);
 
         editButton = new JButton("Edit");
-        editButton.setBounds(180, 15, 50, 20);
+        editButton.setBounds(220, 15, 100, 20);
         editButton.addActionListener(this);
         add(editButton);
 
         duplicateButton = new JButton("Duplicate");
-        duplicateButton.setBounds(220, 15, 50, 20);
+        duplicateButton.setBounds(320, 15, 100, 20);
         editButton.addActionListener(this);
         add(duplicateButton);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if (e.getSource() == this){
+            MagnetData data = FileHandler.readMagnetData(filename, name.getText());
+            if (data != null){
+                if (data.toString().charAt(0) == '0'){
+                    double[] outputData = new double[4];
+                    for (int i = 0; i < 4; i++) {
+                        outputData[i] = data.getData()[i];
+                    }
+                    SimulationGUI magnetDetails = new SimulationGUI(outputData, data.getData()[4], new Diagram(outputData, true), new GUI(previous), );
+                }
+            }
+        }
     }
 }

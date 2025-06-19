@@ -11,18 +11,18 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
     private JButton back;
     private LoginGUI previous;
     public FileHandlerGUI(LoginGUI p){
-        setSize(500, 550);
+        setBounds(p.getBounds());
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         setVisible(true);
 
         fileLabel = new JLabel("File Name:");
-        fileLabel.setBounds(10, 10, 100, 15);
+        fileLabel.setBounds(10, 10, 100, 20);
         add(fileLabel);
 
         fileName = new JTextField();
-        fileName.setBounds(10, 40, 100, 15);
+        fileName.setBounds(10, 40, 100, 20);
         fileName.addKeyListener(this);
         add(fileName);
 
@@ -48,11 +48,15 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyChar() == '\n'){
+            System.out.println(fileName.getText());
             String[] magnetNames = FileHandler.readMagnetArray(fileName.getText());
             if(magnetNames != null) {
+                System.out.println(fileName.getText());
                 buttons = new MagnetButton[magnetNames.length];
                 for (int i = 0; i < buttons.length; i++) {
-                    buttons[i] = new MagnetButton(magnetNames[i]);
+                    buttons[i] = new MagnetButton(magnetNames[i], this, fileName.getText());
+                    buttons[i].setBounds(10, 60*i+70, buttons[i].getWidth(), buttons[i].getHeight());
+                    add(buttons[i]);
                 }
             }
         }

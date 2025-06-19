@@ -8,6 +8,9 @@ public class MagnetData {
         name = n;
         square = s;
     }
+    public double[] getData(){
+        return data;
+    }
     public MagnetData(String inputData) {
         int dataPosition = 0;
         int strPosition;
