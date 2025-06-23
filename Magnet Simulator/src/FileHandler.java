@@ -6,6 +6,41 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class FileHandler {
+    public static String writeSpecificLine(String fileName, String name, MagnetData data){
+        int line = 0;
+        ArrayList<String> lines = new ArrayList<>();
+        try (
+                FileReader fr = new FileReader(fileName);
+                BufferedReader br = new BufferedReader(fr);
+        ) {
+            line = 0;
+            MagnetData inputData = new MagnetData(br.readLine());
+            while (inputData != null){
+                if (inputData.getName().equals(name)) {
+                    break;
+                }
+                lines.add(inputData.toString());
+                inputData = new MagnetData(br.readLine());
+                line++;
+            }
+        } catch (IOException e) {
+            line = -1;
+        }
+        try (
+                FileWriter fw = new FileWriter(fileName);
+                PrintWriter pr = new PrintWriter(fw);
+        ) {
+            int currentLine = 0;
+            while (line != currentLine && currentLine<lines.size()){
+                pr.println(lines.get(currentLine));
+                currentLine++;
+            }
+            pr.println(data);
+            return "Data Written Successfully";
+        } catch (IOException e) {
+            return null;
+        }
+    }
     public static String writeMagnetData(MagnetData data, String fileName){
         String currentData = "";
         try (

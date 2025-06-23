@@ -37,6 +37,7 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
     @Override
     public void actionPerformed(ActionEvent e) {
         previous.setVisible(true);
+        previous.setBounds(getBounds());
         dispose();
     }
 

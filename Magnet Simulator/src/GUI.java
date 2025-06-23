@@ -27,14 +27,14 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     public GUI(JFrame p){
         String[] inputNames =  {"Length (L)", "Split Length (S)", "Inner Radius (IR)", "Outer Radius (OR)"};
         round = true;
-        setUpGui(inputNames);
         previous = p;
+        setUpGui(inputNames);
     }
 
     public GUI(String[] inputNames, boolean r, LoginGUI p) {
-        setUpGui(inputNames);
-        round = r;
         previous = p;
+        round = r;
+        setUpGui(inputNames);
     }
     public void setUpGui(String[] inputNames){
         density = "";
@@ -85,7 +85,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
 
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(500, 550);
+        setBounds(previous.getBounds());
         setLayout(null);
         for (int i = 0; i < inputs.length; i++) {
             inputs[i] = new JTextField();
@@ -141,6 +141,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             MagnetDataWindow saveData = new MagnetDataWindow(getX(), getY(), outputData);
         } else if (e.getSource() == back){
             previous.setVisible(true);
+            previous.setBounds(getBounds());
             dispose();
         }
     }

@@ -36,7 +36,7 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!data.getName().isEmpty()){
-            FileHandler.writeMagnetData(data, "Magnet Data");
+            FileHandler.writeSpecificLine("Magnet Data", data.getName(), data);
             dispose();
         }
     }
