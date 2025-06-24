@@ -137,7 +137,13 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             for (int i = 0; i < inputData.length; i++) {
                 outputData[i] = inputData[i];
             }
-            outputData[inputData.length] = strToInt(density);
+            double densityCm;
+            if (perCm) {
+                densityCm = Math.sqrt(strToInt(density));
+            } else {
+                densityCm = Math.sqrt(strToInt(density) / ((inputData[0] - inputData[1]) * (inputData[3] - inputData[2]) / 2));
+            }
+            outputData[inputData.length] = densityCm;
             MagnetDataWindow saveData = new MagnetDataWindow(getX(), getY(), outputData);
         } else if (e.getSource() == back){
             previous.setVisible(true);

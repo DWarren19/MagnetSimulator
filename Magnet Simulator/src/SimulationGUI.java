@@ -218,7 +218,9 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
         } else if (e.getSource() == buttons[2]){
             previous.setVisible(true);
             magnetDiagram.setDiameter(0);
-            previous.add(magnetDiagram);
+            if(previous.getClass() == GUI.class) {
+                previous.add(magnetDiagram);
+            }
             previous.setBounds(getBounds());
             dispose();
         } else if (e.getSource() == buttons[3]){

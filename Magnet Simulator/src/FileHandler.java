@@ -14,28 +14,35 @@ public class FileHandler {
                 BufferedReader br = new BufferedReader(fr);
         ) {
             line = 0;
-            MagnetData inputData = new MagnetData(br.readLine());
-            while (inputData != null){
-                if (inputData.getName().equals(name)) {
-                    break;
+            String nextLine = br.readLine();
+            MagnetData inputData = new MagnetData(nextLine);
+            while (nextLine != null){
+                inputData = new MagnetData(nextLine);
+                nextLine = br.readLine();
+                if (!inputData.getName().equals(name)) {
+                    lines.add(inputData.toString());
                 }
-                lines.add(inputData.toString());
-                inputData = new MagnetData(br.readLine());
                 line++;
+                System.out.println(nextLine);
             }
         } catch (IOException e) {
             line = -1;
         }
         try (
                 FileWriter fw = new FileWriter(fileName);
-                PrintWriter pr = new PrintWriter(fw);
+                PrintWriter pw = new PrintWriter(fw);
         ) {
             int currentLine = 0;
             while (line != currentLine && currentLine<lines.size()){
-                pr.println(lines.get(currentLine));
+                pw.println(lines.get(currentLine));
                 currentLine++;
             }
-            pr.println(data);
+            pw.println(data);
+            currentLine++;
+            while (currentLine<lines.size()){
+                pw.println(lines.get(currentLine));
+                currentLine++;
+            }
             return "Data Written Successfully";
         } catch (IOException e) {
             return null;
