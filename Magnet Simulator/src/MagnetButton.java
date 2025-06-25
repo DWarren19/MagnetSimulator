@@ -50,8 +50,11 @@ public class MagnetButton extends JButton implements ActionListener {
                         System.out.println(d);
                     }
                     RoundMagnet magnet = new RoundMagnet(outputData[0], outputData[1], outputData[2], outputData[3], data.getData()[4], 100);
-                    SimulationGUI magnetDetails = new SimulationGUI(outputData, data.getData()[4], new Diagram(outputData, true), previous, magnet);
+                    Diagram magnetDiagram = new Diagram(outputData, true);
+                    SimulationGUI magnetDetails = new SimulationGUI(outputData, data.getData()[4], magnetDiagram, previous, magnet);
+                    magnetDiagram.setMagnetData(outputData);
                     previous.setVisible(false);
+
                 }
             }
         }

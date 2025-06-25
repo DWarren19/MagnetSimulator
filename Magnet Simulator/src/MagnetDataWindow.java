@@ -7,7 +7,9 @@ import java.awt.event.KeyListener;
 public class MagnetDataWindow extends JFrame implements ActionListener, KeyListener {
     private JLabel label1;
     private JLabel label2;
+    private JLabel label3;
     private JButton saveData;
+    private JTextField magnetName;
     private JTextField fileName;
     private MagnetData data;
     public MagnetDataWindow(int x, int y, double[] d){
@@ -22,12 +24,19 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
         label2 = new JLabel("Magnet Name");
         label2.setBounds(75, 25, 100, 15);
         add(label2);
+        label3 = new JLabel("File Name");
+        label3.setBounds(75, 65, 100, 15);
+        add(label3);
         saveData = new JButton("save");
         saveData.setBounds(300, 40, 75, 50);
         saveData.addActionListener(this);
         add(saveData);
+        magnetName = new JTextField();
+        magnetName.setBounds(10, 40, 200, 25);
+        magnetName.addKeyListener(this);
+        add(magnetName);
         fileName = new JTextField();
-        fileName.setBounds(10, 40, 200, 50);
+        fileName.setBounds(10, 80, 200, 25);
         fileName.addKeyListener(this);
         add(fileName);
         data = new MagnetData(d, d.length==6, "");
@@ -36,7 +45,7 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!data.getName().isEmpty()){
-            FileHandler.writeSpecificLine("Magnet Data", data.getName(), data);
+            FileHandler.writeSpecificLine(fileName.getText(), data.getName(), data);
             dispose();
         }
     }
@@ -53,6 +62,6 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
 
     @Override
     public void keyReleased(KeyEvent e) {
-        data.setName(fileName.getText());
+        data.setName(magnetName.getText());
     }
 }

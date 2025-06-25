@@ -180,8 +180,6 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             if (resolution/2 != (int)resolution/2){
                 resolution+=1;
             }
-            stop = false;
-            stopSimulation = false;
             highest = VectorHandler.toVector(magnet.getStrength(0, 0, 0));
             double outputValue = highest;
             int orderOfMagnitudeInt = 2;
@@ -202,6 +200,8 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             y = 0;
             z = 0;
             if (diameter != 0 && resolution != 0) {
+                stop = false;
+                stopSimulation = false;
                 magneticFieldData = new double[(int)(diameter*resolution)/2+1][(int)(diameter*resolution)/2+1][(int)(diameter*resolution)/2+1];
                 simulateMagnet();
             }
@@ -220,6 +220,9 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             magnetDiagram.setDiameter(0);
             if(previous.getClass() == GUI.class) {
                 previous.add(magnetDiagram);
+            } else if (previous.getClass() == FileHandlerGUI.class){
+                FileHandlerGUI previousGUI = (FileHandlerGUI) previous;
+                previousGUI.reset();
             }
             previous.setBounds(getBounds());
             dispose();

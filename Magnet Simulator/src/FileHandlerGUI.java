@@ -33,7 +33,12 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
 
         previous = p;
     }
-
+    public void reset(){
+        for (int i = 0; i < buttons.length; i++) {
+            remove(buttons[i]);
+        }
+        fileName.setText("");
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
         previous.setVisible(true);

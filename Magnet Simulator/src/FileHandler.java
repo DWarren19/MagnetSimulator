@@ -15,7 +15,7 @@ public class FileHandler {
         ) {
             line = 0;
             String nextLine = br.readLine();
-            MagnetData inputData = new MagnetData(nextLine);
+            MagnetData inputData;
             while (nextLine != null){
                 inputData = new MagnetData(nextLine);
                 nextLine = br.readLine();

@@ -132,19 +132,21 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
                 SimulationGUI nextGUI = new SimulationGUI(inputData, densityCm, crossSectionDiagram, this, magnet);
                 setVisible(false);
             }
-        } else if (e.getSource() == save){
-            double[] outputData = new double[inputData.length+1];
-            for (int i = 0; i < inputData.length; i++) {
-                outputData[i] = inputData[i];
+        } else if (e.getSource() == save && strToInt(density)!=0 && inputData[0]!=0 && inputData[3]!=0){
+            if (strToInt(density) > (inputData[0]-inputData[1])*(inputData[3]-inputData[2])) {
+                double[] outputData = new double[inputData.length + 1];
+                for (int i = 0; i < inputData.length; i++) {
+                    outputData[i] = inputData[i];
+                }
+                double densityCm;
+                if (perCm) {
+                    densityCm = Math.sqrt(strToInt(density));
+                } else {
+                    densityCm = Math.sqrt(strToInt(density) / ((inputData[0] - inputData[1]) * (inputData[3] - inputData[2]) / 2));
+                }
+                outputData[inputData.length] = densityCm;
+                MagnetDataWindow saveData = new MagnetDataWindow(getX(), getY(), outputData);
             }
-            double densityCm;
-            if (perCm) {
-                densityCm = Math.sqrt(strToInt(density));
-            } else {
-                densityCm = Math.sqrt(strToInt(density) / ((inputData[0] - inputData[1]) * (inputData[3] - inputData[2]) / 2));
-            }
-            outputData[inputData.length] = densityCm;
-            MagnetDataWindow saveData = new MagnetDataWindow(getX(), getY(), outputData);
         } else if (e.getSource() == back){
             previous.setVisible(true);
             previous.setBounds(getBounds());
