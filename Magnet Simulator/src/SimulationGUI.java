@@ -222,7 +222,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
                 previous.add(magnetDiagram);
             } else if (previous.getClass() == FileHandlerGUI.class){
                 FileHandlerGUI previousGUI = (FileHandlerGUI) previous;
-                previousGUI.reset();
+                previousGUI.reset(true);
             }
             previous.setBounds(getBounds());
             dispose();

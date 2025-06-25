@@ -13,7 +13,6 @@ public class FileHandler {
                 FileReader fr = new FileReader(fileName);
                 BufferedReader br = new BufferedReader(fr);
         ) {
-            line = 0;
             String nextLine = br.readLine();
             MagnetData inputData;
             while (nextLine != null){
@@ -36,12 +35,16 @@ public class FileHandler {
             while (line != currentLine && currentLine<lines.size()){
                 pw.println(lines.get(currentLine));
                 currentLine++;
+                System.out.println(currentLine);
             }
-            pw.println(data);
+            if (data != null) {
+                pw.println(data);
+            }
             currentLine++;
             while (currentLine<lines.size()){
                 pw.println(lines.get(currentLine));
                 currentLine++;
+                System.out.println(currentLine + "Data Written Successfully");
             }
             return "Data Written Successfully";
         } catch (IOException e) {

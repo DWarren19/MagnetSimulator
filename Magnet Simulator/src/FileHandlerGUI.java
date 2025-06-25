@@ -16,6 +16,7 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         setVisible(true);
+        setResizable(false);
 
         fileLabel = new JLabel("File Name:");
         fileLabel.setBounds(10, 10, 100, 20);
@@ -33,11 +34,14 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
 
         previous = p;
     }
-    public void reset(){
+    public void reset(boolean resetName){
         for (int i = 0; i < buttons.length; i++) {
             remove(buttons[i]);
         }
-        fileName.setText("");
+        if(resetName) {
+            fileName.setText("");
+        }
+        update(getGraphics());
     }
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -53,18 +57,20 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyChar() == '\n'){
-            System.out.println(fileName.getText());
-            String[] magnetNames = FileHandler.readMagnetArray(fileName.getText());
-            if(magnetNames != null) {
-                System.out.println(fileName.getText());
-                buttons = new MagnetButton[magnetNames.length];
-                for (int i = 0; i < buttons.length; i++) {
-                    buttons[i] = new MagnetButton(magnetNames[i], this, fileName.getText());
-                    buttons[i].setBounds(10, 60*i+70, buttons[i].getWidth(), buttons[i].getHeight());
-                    add(buttons[i]);
-                }
+        if (e.getKeyChar() == '\n') {
+            loadData();
+        }
+    }
+    public void loadData() {
+        String[] magnetNames = FileHandler.readMagnetArray(fileName.getText());
+        if (magnetNames != null) {
+            buttons = new MagnetButton[magnetNames.length];
+            for (int i = 0; i < buttons.length; i++) {
+                buttons[i] = new MagnetButton(magnetNames[i], this, fileName.getText());
+                buttons[i].setBounds(10, 60 * i + 70, buttons[i].getWidth(), buttons[i].getHeight());
+                add(buttons[i]);
             }
+            update(getGraphics());
         }
     }
 

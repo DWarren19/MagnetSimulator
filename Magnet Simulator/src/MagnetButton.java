@@ -57,6 +57,10 @@ public class MagnetButton extends JButton implements ActionListener {
 
                 }
             }
+        } else if (e.getSource() == deleteButton) {
+            FileHandler.writeSpecificLine(filename, name.getText(), null);
+            previous.reset(false);
+            previous.loadData();
         }
     }
 }
