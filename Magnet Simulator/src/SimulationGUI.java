@@ -177,8 +177,10 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == buttons[0]){
-            if (resolution/2 != (int)resolution/2){
-                resolution+=1;
+            if (resolution/(diameter/2) != (int)(resolution/(diameter/2))){
+                resolution /= diameter/2;
+                resolution = (int)resolution;
+                resolution *= diameter/2;
             }
             highest = VectorHandler.toVector(magnet.getStrength(0, 0, 0));
             double outputValue = highest;

@@ -30,26 +30,36 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         previous = p;
         setUpGui(inputNames);
     }
-
-    public GUI(String[] inputNames, boolean r, LoginGUI p) {
+    public GUI(JFrame p, double[] data, double density){
+        String[] inputNames =  {"Length (L)", "Split Length (S)", "Inner Radius (IR)", "Outer Radius (OR)"};
+        round = true;
+        previous = p;
+        setUpGui(inputNames);
+        for (int i = 0; i < inputs.length; i++) {
+            inputs[i].setText(String.valueOf(data[i]));
+        }
+        densityInput.setText(String.valueOf(density*density));
+    }
+    public GUI(String[] inputNames, boolean r, JFrame p) {
         previous = p;
         round = r;
         setUpGui(inputNames);
     }
+
     public void setUpGui(String[] inputNames){
         density = "";
         inputLabels = new JLabel[inputNames.length];
         inputs = new JTextField[inputNames.length];
         unitLabels = new JLabel[inputNames.length];
 
-        densityUnits = new JButton("turns per cm^2");
+        densityUnits = new JButton("turns per side");
         densityUnits.setBounds(300, 60, 150, 50);
         densityUnits.setOpaque(false);
         densityUnits.setBackground(Color.lightGray);
         add(densityUnits);
         densityUnits.addActionListener(this);
 
-        densityLabel = new JLabel("turns per side");
+        densityLabel = new JLabel("turns per cm^2");
         densityLabel.setBounds(350, 20, 100, 30);
         add(densityLabel);
         densityButtonLabel = new JLabel("switch to");
@@ -80,7 +90,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         add(back);
         back.addActionListener(this);
 
-        perCm = false;
+        perCm = true;
         inputData = new double[inputs.length];
 
         setTitle("Magnet Simulator");
@@ -94,7 +104,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             inputs[i].addKeyListener(this);
             add(inputs[i]);
             unitLabels[i] = new JLabel("cm");
-            unitLabels[i].setBounds(40, 50*i, 50, 50);
+            unitLabels[i].setBounds(45, 50*i, 50, 50);
             add(unitLabels[i]);
             inputLabels[i] = new JLabel(inputNames[i]);
             inputLabels[i].setBounds(80, 50*i, 150,50);
