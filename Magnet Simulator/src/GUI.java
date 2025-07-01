@@ -42,6 +42,17 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         inputData = data;
         crossSectionDiagram.setMagnetData(data);
     }
+    public GUI(String[] inputNames, boolean r, JFrame p, double[] data, double density){
+        round = r;
+        previous = p;
+        setUpGui(inputNames);
+        for (int i = 0; i < inputs.length; i++) {
+            inputs[i].setText(String.valueOf(data[i]));
+        }
+        densityInput.setText(String.valueOf(density*density).substring(0, 7));
+        inputData = data;
+        crossSectionDiagram.setMagnetData(data);
+    }
     public GUI(String[] inputNames, boolean r, JFrame p) {
         previous = p;
         round = r;
@@ -160,6 +171,10 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
                 MagnetDataWindow saveData = new MagnetDataWindow(getX(), getY(), outputData);
             }
         } else if (e.getSource() == back){
+            if (previous.getClass() == FileHandlerGUI.class){
+                FileHandlerGUI previous2 = (FileHandlerGUI)previous;
+                previous2.reset(true);
+            }
             previous.setVisible(true);
             previous.setBounds(getBounds());
             dispose();

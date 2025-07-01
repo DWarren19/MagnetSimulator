@@ -32,7 +32,7 @@ public class MagnetButton extends JButton implements ActionListener {
 
         duplicateButton = new JButton("Duplicate");
         duplicateButton.setBounds(320, 15, 100, 20);
-        editButton.addActionListener(this);
+        duplicateButton.addActionListener(this);
         add(duplicateButton);
     }
 
@@ -77,6 +77,7 @@ public class MagnetButton extends JButton implements ActionListener {
         } else if (e.getSource() == editButton) {
             MagnetData data = FileHandler.readMagnetData(filename, name.getText());
             if (data != null){
+                editButton = null;
                 if (data.toString().charAt(0) == '0'){
                     double[] outputData = new double[4];
                     for (int i = 0; i < 4; i++) {
@@ -95,9 +96,22 @@ public class MagnetButton extends JButton implements ActionListener {
                     for (double d: outputData) {
                         System.out.println(d);
                     }
-                    GUI magnetDetails = new GUI(previous, outputData, data.getData()[5]);
+                    SquareMagnetGUI magnetDetails = new SquareMagnetGUI(previous, outputData, data.getData()[5]);
                     previous.setVisible(false);
                 }
+            }
+        } else if (e.getSource() == duplicateButton) {
+            MagnetData data = FileHandler.readMagnetData(filename, name.getText());
+            if (data != null){
+                double[] outputData = new double[4];
+                for (int i = 0; i < 4; i++) {
+                    outputData[i] = data.getData()[i];
+                }
+                for (double d: outputData) {
+                    System.out.println(d);
+                }
+                MagnetDataWindow magnetDetails = new MagnetDataWindow(previous.getX(), previous.getY(), data.getData());
+                previous.reset(false);
             }
         }
     }
