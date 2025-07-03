@@ -25,7 +25,7 @@ public class MagnetData {
         }
         if (inputData.charAt(0) == '0'){
             square = false;
-            data = new double[6];
+            data = new double[5];
             String currentValue = "";
             for (;strPosition < inputData.length(); strPosition++) {
                 if(inputData.charAt(strPosition)=='|'){
@@ -41,7 +41,7 @@ public class MagnetData {
             }
         } else {
             square = true;
-            data = new double[7];
+            data = new double[6];
             String currentValue = "";
             for (;strPosition < inputData.length(); strPosition++) {
                 if(inputData.charAt(strPosition)=='|'){

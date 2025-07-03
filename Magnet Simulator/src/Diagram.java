@@ -28,7 +28,7 @@ public class Diagram extends JPanel {
             add(outputLabels[i]);
         }
     }
-    public void setDiameter(int d){
+    public void setDiameter(double d){
         diameter = d*outputData[1]/data[1];
         repaint();
     }

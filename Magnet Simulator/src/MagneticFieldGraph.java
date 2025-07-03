@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 public class MagneticFieldGraph extends JFrame implements ActionListener {
     private JFrame previous;
     private JButton back;
+    private MagneticFieldGraphDrawing drawing;
     public MagneticFieldGraph(JFrame p, double[] data, double increment, double maximum) {
         previous = p;
         setSize(500, 550);
@@ -14,8 +15,9 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
         setLayout(null);
         setVisible(true);
 
-        MagneticFieldGraphDrawing drawing = new MagneticFieldGraphDrawing(data, increment, maximum);
+        drawing = new MagneticFieldGraphDrawing(data, increment, maximum);
         drawing.setBounds(0, 0, 500, 500);
+        add(drawing);
 
         back = new JButton("Back");
         back.setBounds(0, 500, 100, 50);

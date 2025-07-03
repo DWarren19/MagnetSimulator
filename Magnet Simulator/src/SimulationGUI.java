@@ -168,7 +168,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
     public void keyReleased(KeyEvent e) {
         if(e.getSource() == inputs[0]) {
             diameter = GUI.strToInt(inputs[0].getText());
-            magnetDiagram.setDiameter((int)diameter);
+            magnetDiagram.setDiameter(diameter);
         } else if (e.getSource() == inputs[1]){
             resolution = GUI.strToInt(inputs[1].getText());
         }
@@ -222,6 +222,8 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             magnetDiagram.setDiameter(0);
             if(previous.getClass() == GUI.class) {
                 previous.add(magnetDiagram);
+            } else if (previous.getClass() == SquareMagnetGUI.class){
+                previous.add(magnetDiagram);
             } else if (previous.getClass() == FileHandlerGUI.class){
                 FileHandlerGUI previousGUI = (FileHandlerGUI) previous;
                 previousGUI.reset(true);
@@ -242,7 +244,15 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
                 outputWindow.add(outputText);
             }
         } else if (e.getSource() == buttons[4]){
+            if(magneticFieldData != null) {
+                double[] outputData = new double[magneticFieldData.length];
+                for (int i = 0; i < magneticFieldData.length; i++) {
+                    outputData[i] = magneticFieldData[i][i][i];
+                    System.out.println(outputData[i]);
+                }
+                MagneticFieldGraph graph1 = new MagneticFieldGraph(this, outputData, 1 / resolution * Math.sqrt(3), diameter / 2 * Math.sqrt(3));
 
+            }
         }
     }
 

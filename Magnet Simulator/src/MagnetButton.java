@@ -83,9 +83,6 @@ public class MagnetButton extends JButton implements ActionListener {
                     for (int i = 0; i < 4; i++) {
                         outputData[i] = data.getData()[i];
                     }
-                    for (double d: outputData) {
-                        System.out.println(d);
-                    }
                     GUI magnetDetails = new GUI(previous, outputData, data.getData()[4]);
                     previous.setVisible(false);
                 } else {
@@ -110,8 +107,7 @@ public class MagnetButton extends JButton implements ActionListener {
                 for (double d: outputData) {
                     System.out.println(d);
                 }
-                MagnetDataWindow magnetDetails = new MagnetDataWindow(previous.getX(), previous.getY(), data.getData());
-                previous.reset(false);
+                MagnetDataWindow magnetDetails = new MagnetDataWindow(previous.getX(), previous.getY(), data.getData(), previous, filename);
             }
         }
     }

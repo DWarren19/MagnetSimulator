@@ -12,6 +12,31 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
     private JTextField magnetName;
     private JTextField fileName;
     private MagnetData data;
+    JFrame previous;
+    public MagnetDataWindow(int x, int y, double[] d, JFrame p, String name){
+        setBounds(x, y, 400, 150);
+        setTitle("Magnet Simulator");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLayout(null);
+        setVisible(true);
+        previous = p;
+        label1 = new JLabel("Save a copy of the magnet to the same file?");
+        label1.setBounds(0, 0, 400, 15);
+        add(label1);
+        label2 = new JLabel("Magnet Name");
+        label2.setBounds(75, 25, 100, 15);
+        add(label2);
+        saveData = new JButton("save");
+        saveData.setBounds(300, 40, 75, 50);
+        saveData.addActionListener(this);
+        add(saveData);
+        magnetName = new JTextField();
+        magnetName.setBounds(10, 40, 200, 25);
+        magnetName.addKeyListener(this);
+        add(magnetName);
+        fileName = new JTextField(name);
+        data = new MagnetData(d, d.length==6, "");
+    }
     public MagnetDataWindow(int x, int y, double[] d){
         setBounds(x, y, 400, 150);
         setTitle("Magnet Simulator");
@@ -46,6 +71,13 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
     public void actionPerformed(ActionEvent e) {
         if (!data.getName().isEmpty()){
             FileHandler.writeSpecificLine(fileName.getText(), data.getName(), data);
+            if(previous!=null){
+                if (previous.getClass() == FileHandlerGUI.class){
+                    FileHandlerGUI previous2 = (FileHandlerGUI)previous;
+                    previous2.reset(false);
+                    previous2.loadData();
+                }
+            }
             dispose();
         }
     }
