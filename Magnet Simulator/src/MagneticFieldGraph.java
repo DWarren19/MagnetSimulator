@@ -16,11 +16,11 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
         setVisible(true);
 
         drawing = new MagneticFieldGraphDrawing(data, increment, maximum);
-        drawing.setBounds(0, 0, 500, 500);
+        drawing.setBounds(0, 0, 500, 480);
         add(drawing);
 
         back = new JButton("Back");
-        back.setBounds(0, 500, 100, 50);
+        back.setBounds(0, 480, 100, 30);
         back.addActionListener(this);
         add(back);
     }

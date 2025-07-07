@@ -17,7 +17,9 @@ public class MagneticFieldGraphDrawing extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.setColor(Color.black);
         for (int i = 0; i < data.length-1; i++) {
-            g2.drawLine((int)(500*i/(data.length-1)),(int)(500*data[i]/maximum), (int)(500*(i+1)/(data.length-1)), (int)(500*data[i+1]/maximum));
+            g2.drawLine((500*i/(data.length-1)),(int)(500*data[i]/maximum), (500*(i+1)/(data.length-1)), (int)(500*data[i+1]/maximum));
+            g2.drawString(String.valueOf(i*increment+0.0005).substring(0, 5), 500*i/(data.length-1), 470);
+            System.out.println(500*i/(data.length-1)+" "+data[i]+" "+maximum);
         }
     }
 }
