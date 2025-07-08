@@ -204,7 +204,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             if (diameter != 0 && resolution != 0) {
                 stop = false;
                 stopSimulation = false;
-                magneticFieldData = new double[(int)(diameter*resolution)/2+1][(int)(diameter*resolution)/2+1][(int)(diameter*resolution)/2+1];
+                magneticFieldData = new double[(int)Math.ceil(diameter*resolution)/2][(int)Math.ceil(diameter*resolution)/2][(int)Math.ceil(diameter*resolution)/2];
                 simulateMagnet();
             }
             //LoadingScreen loading = new LoadingScreen(getX(), getY(), (int)Math.pow((resolution*diameter)+1, 3)/2);
