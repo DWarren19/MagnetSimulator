@@ -9,7 +9,7 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
     private MagneticFieldGraphDrawing drawing;
     public MagneticFieldGraph(JFrame p, double[] data, double increment, double maximum) {
         previous = p;
-        setSize(500, 550);
+        setBounds(previous.getBounds());
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);

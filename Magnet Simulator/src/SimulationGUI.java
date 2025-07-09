@@ -189,7 +189,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
                 outputValue/=10;
                 orderOfMagnitudeInt+=1;
             }
-            while (outputValue<100){
+            while (outputValue<100 && outputValue != 0){
                 outputValue*=10;
                 orderOfMagnitudeInt-=1;
             }
@@ -204,7 +204,12 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             if (diameter != 0 && resolution != 0) {
                 stop = false;
                 stopSimulation = false;
-                magneticFieldData = new double[(int)Math.ceil(diameter*resolution)/2][(int)Math.ceil(diameter*resolution)/2][(int)Math.ceil(diameter*resolution)/2];
+                int size = (int)Math.ceil(diameter*resolution)/2;
+                if (size == diameter*resolution/2){
+                    size+=1;
+                }
+                magneticFieldData = new double[size][size][size];
+                System.out.println(size);
                 simulateMagnet();
             }
             //LoadingScreen loading = new LoadingScreen(getX(), getY(), (int)Math.pow((resolution*diameter)+1, 3)/2);
@@ -251,7 +256,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
                     System.out.println(outputData[i]);
                 }
                 MagneticFieldGraph graph1 = new MagneticFieldGraph(this, outputData, 1 / resolution * Math.sqrt(3), highest);
-
+                setVisible(false);
             }
         }
     }

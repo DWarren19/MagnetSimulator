@@ -10,6 +10,7 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
     private JLabel fileLabel;
     private JButton back;
     private LoginGUI previous;
+    private JFileChooser fileChooser;
     public FileHandlerGUI(LoginGUI p){
         setBounds(p.getBounds());
         setTitle("Magnet Simulator");
@@ -20,19 +21,27 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
 
         fileLabel = new JLabel("File Name:");
         fileLabel.setBounds(10, 10, 100, 20);
+        fileLabel.setVisible(false);
         add(fileLabel);
 
         fileName = new JTextField();
         fileName.setBounds(10, 40, 100, 20);
         fileName.addKeyListener(this);
+        fileName.setVisible(false);
         add(fileName);
+
+        fileChooser = new JFileChooser();
+        fileChooser.setBounds(0, 0, 450, 450);
+        add(fileChooser);
 
         back = new JButton("Back");
         back.setBounds(150, 10, 100, 50);
         back.addActionListener(this);
         add(back);
+        back.setVisible(false);
 
         previous = p;
+
     }
     public void reset(boolean resetName){
         for (int i = 0; i < buttons.length; i++) {
@@ -45,6 +54,7 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == back)
         previous.setVisible(true);
         previous.setBounds(getBounds());
         dispose();
