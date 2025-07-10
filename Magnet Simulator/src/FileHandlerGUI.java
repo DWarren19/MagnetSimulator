@@ -1,8 +1,6 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.*;
+import java.awt.event.*;
 
 public class FileHandlerGUI extends JFrame implements ActionListener, KeyListener {
     private MagnetButton[] buttons;
@@ -11,6 +9,9 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
     private JButton back;
     private LoginGUI previous;
     private JFileChooser fileChooser;
+    private Component[] fileChooserComponents;
+    private JButton open;
+    private JButton cancel;
     public FileHandlerGUI(LoginGUI p){
         setBounds(p.getBounds());
         setTitle("Magnet Simulator");
@@ -32,6 +33,23 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
 
         fileChooser = new JFileChooser();
         fileChooser.setBounds(0, 0, 450, 450);
+        fileChooserComponents = fileChooser.getComponents();
+        for (Component c: fileChooserComponents){
+            System.out.println(c.getClass()+"\n");
+            if (c.getClass() == JPanel.class){
+                for (Component d: ((JPanel) c).getComponents()){
+                    System.out.println(d.getClass());
+                    if (d.getClass() == JPanel.class){
+                        for (Component e: ((JPanel) d).getComponents()){
+                            System.out.print("   "+e.getClass());
+                        }
+                    }
+                }
+            }
+        }
+        System.out.println(fileChooser.getApproveButtonMnemonic());
+
+        fileChooser.getComponents();
         add(fileChooser);
 
         back = new JButton("Back");
@@ -54,10 +72,11 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == back)
-        previous.setVisible(true);
-        previous.setBounds(getBounds());
-        dispose();
+        if (e.getSource() == back) {
+            previous.setVisible(true);
+            previous.setBounds(getBounds());
+            dispose();
+        }
     }
 
     @Override
