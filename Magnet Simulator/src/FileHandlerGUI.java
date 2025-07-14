@@ -1,6 +1,9 @@
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileView;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.File;
 
 public class FileHandlerGUI extends JFrame implements ActionListener, KeyListener {
     private MagnetButton[] buttons;
@@ -10,6 +13,8 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
     private LoginGUI previous;
     private JFileChooser fileChooser;
     private Component[] fileChooserComponents;
+    private Component[] fileChooserComponents2;
+    private Component[] fileChooserComponents3;
     private JButton open;
     private JButton cancel;
     public FileHandlerGUI(LoginGUI p){
@@ -34,7 +39,17 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
         fileChooser = new JFileChooser();
         fileChooser.setBounds(0, 0, 450, 450);
         fileChooserComponents = fileChooser.getComponents();
-        for (Component c: fileChooserComponents){
+        if (fileChooserComponents[fileChooserComponents.length-1].getClass() == JPanel.class) {
+            fileChooserComponents2 = ((JPanel) fileChooserComponents[fileChooserComponents.length - 1]).getComponents();
+            if (fileChooserComponents2[fileChooserComponents2.length-1].getClass() == JPanel.class) {
+                fileChooserComponents3 = ((JPanel) fileChooserComponents2[fileChooserComponents2.length - 1]).getComponents();
+                open = (JButton) fileChooserComponents3[fileChooserComponents3.length - 2];
+                open.addActionListener(this);
+                cancel = (JButton) fileChooserComponents3[fileChooserComponents3.length - 1];
+                cancel.addActionListener(this);
+            }
+        }
+        /*for (Component c: fileChooserComponents){
             System.out.println(c.getClass()+"\n");
             if (c.getClass() == JPanel.class){
                 for (Component d: ((JPanel) c).getComponents()){
@@ -46,9 +61,7 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
                     }
                 }
             }
-        }
-        System.out.println(fileChooser.getApproveButtonMnemonic());
-
+        }*/
         fileChooser.getComponents();
         add(fileChooser);
 
@@ -72,10 +85,16 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == back) {
+        if (e.getSource() == back || e.getSource() == cancel) {
             previous.setVisible(true);
             previous.setBounds(getBounds());
             dispose();
+        } else {
+            fileChooser.setVisible(false);
+            fileLabel.setVisible(true);
+            fileName.setVisible(true);
+            back.setVisible(true);
+            fileName.setText(fileChooser.getSelectedFile().getName());
         }
     }
 
