@@ -1,17 +1,15 @@
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 
 public class FileHandler {
     public static String writeSpecificLine(String fileName, String name, MagnetData data){
         int line = 0;
         ArrayList<String> lines = new ArrayList<>();
+        //File magnetDataFile = new File("Documents/Magnet Data/"+fileName);
         try (
                 FileReader fr = new FileReader(fileName);
                 BufferedReader br = new BufferedReader(fr);
+
         ) {
             String nextLine = br.readLine();
             MagnetData inputData;
@@ -74,6 +72,7 @@ public class FileHandler {
         }
     }
     public static MagnetData readMagnetData(String fileName, String name){
+        //File magnetDataFile = new File("Documents/Magnet Data/"+fileName);
         try (
                 FileReader fr = new FileReader(fileName);
                 BufferedReader br = new BufferedReader(fr);
@@ -91,6 +90,7 @@ public class FileHandler {
         }
     }
     public static String[] readMagnetArray(String name){
+        //File magnetDataFile = new File("Documents/Magnet Data/"+name);
         try (
                 FileReader fr = new FileReader(name);
                 BufferedReader br = new BufferedReader(fr);
@@ -122,6 +122,7 @@ public class FileHandler {
         }
     }
     public static String write3dArray(double[][][] a, String name){
+        //File magnetDataFile = new File("Documents/"+name);
         try (
                 FileWriter fw = new FileWriter(name+".txt");
                 PrintWriter pw = new PrintWriter(fw);
