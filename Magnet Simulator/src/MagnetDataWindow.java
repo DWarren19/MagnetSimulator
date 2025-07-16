@@ -13,21 +13,16 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
     private JTextField magnetName;
     private JTextField fileName;
     private MagnetData data;
-    private JFileChooser fileChooser;
-    private Component[] fileChooserComponents;
-    private Component[] fileChooserComponents2;
-    private Component[] fileChooserComponents3;
-    private JButton save;
-    private JButton close;
-    JFrame previous;
+    private JFrame previous;
+    private JFileChooser test;
     public MagnetDataWindow(int x, int y, double[] d, JFrame p, String name){
-        setBounds(x, y, 500, 550);
+        setBounds(x, y, 400, 150);
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(null);
         setVisible(true);
         previous = p;
-        /*label1 = new JLabel("Save a copy of the magnet to the same file?");
+        label1 = new JLabel("Save a copy of the magnet to the same file?");
         label1.setBounds(0, 0, 400, 15);
         add(label1);
         label2 = new JLabel("Magnet Name");
@@ -37,26 +32,13 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
         saveData.setBounds(300, 40, 75, 50);
         saveData.addActionListener(this);
         add(saveData);
+        test = new JFileChooser();
         magnetName = new JTextField();
         magnetName.setBounds(10, 40, 200, 25);
         magnetName.addKeyListener(this);
         add(magnetName);
-        fileName = new JTextField(name);
-        */
+        fileName = new JTextField(test.getCurrentDirectory().getPath() + name);
         data = new MagnetData(d, d.length==6, "");
-        fileChooser = new JFileChooser();
-        fileChooser.setBounds(0, 0, 450, 450);
-        fileChooserComponents = fileChooser.getComponents();
-        if (fileChooserComponents[fileChooserComponents.length-1].getClass() == JPanel.class) {
-            fileChooserComponents2 = ((JPanel) fileChooserComponents[fileChooserComponents.length - 1]).getComponents();
-            if (fileChooserComponents2[fileChooserComponents2.length-1].getClass() == JPanel.class) {
-                fileChooserComponents3 = ((JPanel) fileChooserComponents2[fileChooserComponents2.length - 1]).getComponents();
-                save = (JButton) fileChooserComponents3[fileChooserComponents3.length - 2];
-                save.addActionListener(this);
-                close = (JButton) fileChooserComponents3[fileChooserComponents3.length - 1];
-                close.addActionListener(this);
-            }
-        }
     }
     public MagnetDataWindow(int x, int y, double[] d){
         setBounds(x, y, 400, 150);
@@ -64,7 +46,7 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(null);
         setVisible(true);
-        /*label1 = new JLabel("Save data about the magnet (length, radius etc.) to a file?");
+        label1 = new JLabel("Save data about the magnet (length, radius etc.) to a file?");
         label1.setBounds(0, 0, 400, 15);
         add(label1);
         label2 = new JLabel("Magnet Name");
@@ -77,38 +59,25 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
         saveData.setBounds(300, 40, 75, 50);
         saveData.addActionListener(this);
         add(saveData);
+        test = new JFileChooser();
         magnetName = new JTextField();
         magnetName.setBounds(10, 40, 200, 25);
         magnetName.addKeyListener(this);
         add(magnetName);
-        fileName = new JTextField();
+        fileName = new JTextField(test.getCurrentDirectory().getPath() + "[\\file name here]");
         fileName.setBounds(10, 80, 200, 25);
         fileName.addKeyListener(this);
         add(fileName);
-        */
         data = new MagnetData(d, d.length==6, "");
-        fileChooser = new JFileChooser();
-        fileChooser.setBounds(0, 0, 450, 450);
-        fileChooserComponents = fileChooser.getComponents();
-        if (fileChooserComponents[fileChooserComponents.length-1].getClass() == JPanel.class) {
-            fileChooserComponents2 = ((JPanel) fileChooserComponents[fileChooserComponents.length - 1]).getComponents();
-            if (fileChooserComponents2[fileChooserComponents2.length-1].getClass() == JPanel.class) {
-                fileChooserComponents3 = ((JPanel) fileChooserComponents2[fileChooserComponents2.length - 1]).getComponents();
-                save = (JButton) fileChooserComponents3[fileChooserComponents3.length - 2];
-                save.addActionListener(this);
-                close = (JButton) fileChooserComponents3[fileChooserComponents3.length - 1];
-                close.addActionListener(this);
-            }
-        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!fileChooser.getSelectedFile().getName().equals("")){
+        if (!fileName.getText().isEmpty()) {
             FileHandler.writeSpecificLine(fileName.getText(), data.getName(), data);
-            if(previous!=null){
-                if (previous.getClass() == FileHandlerGUI.class){
-                    FileHandlerGUI previous2 = (FileHandlerGUI)previous;
+            if (previous != null) {
+                if (previous.getClass() == FileHandlerGUI.class) {
+                    FileHandlerGUI previous2 = (FileHandlerGUI) previous;
                     previous2.reset(false);
                     previous2.loadData();
                 }

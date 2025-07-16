@@ -58,8 +58,9 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
                 }
             }
         }*/
-        //File documentsFolder = fileChooser.getCurrentDirectory();
-        //fileChooser.setCurrentDirectory(new File());
+        File documentsFolder = fileChooser.getCurrentDirectory();
+        //fileChooser.setCurrentDirectory();
+        System.out.println(documentsFolder.getPath());
         add(fileChooser);
 
         back = new JButton("Back");
