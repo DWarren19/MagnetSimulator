@@ -18,7 +18,7 @@ public class MagnetButton extends JPanel implements ActionListener {
         setSize(450, 50);
         setBackground(Color.lightGray);
 
-        selectButton = new JButton("select");
+        selectButton = new JButton("Open");
         selectButton.setBounds(10, 10, 100, 50);
         selectButton.addActionListener(this);
         add(selectButton);

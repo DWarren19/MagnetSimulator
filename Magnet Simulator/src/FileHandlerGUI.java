@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileView;
 import java.awt.*;
 import java.awt.event.*;
@@ -60,7 +61,8 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
         }*/
         File documentsFolder = fileChooser.getCurrentDirectory();
         //fileChooser.setCurrentDirectory();
-        System.out.println(documentsFolder.getPath());
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Magnet Data File", "magnet"));
+        //System.out.println(documentsFolder.getPath());
         add(fileChooser);
 
         back = new JButton("Back");
@@ -92,11 +94,12 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
             dispose();
         } else {
             if (fileChooser.getSelectedFile() != null) {
-                fileName = fileChooser.getSelectedFile().getName();
+                fileName = fileChooser.getSelectedFile().getPath();
+                System.out.println(fileName);
                 fileChooser.setVisible(false);
                 fileLabel.setVisible(true);
                 back.setVisible(true);
-                String[] magnetNames = FileHandler.readMagnetArray(fileChooser.getSelectedFile().getName());
+                String[] magnetNames = FileHandler.readMagnetArray(fileName);
                 if (magnetNames != null) {
                     buttons = new MagnetButton[magnetNames.length];
                     for (int i = 0; i < buttons.length; i++) {

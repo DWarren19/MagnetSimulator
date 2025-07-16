@@ -19,8 +19,8 @@ public class OutputDataWindow extends JFrame implements ActionListener{
         label1 = new JLabel("Save data about the magnetic field to a file?");
         label1.setBounds(0, 0, 400, 15);
         add(label1);
-        label2 = new JLabel("File Name");
-        label2.setBounds(75, 25, 100, 15);
+        label2 = new JLabel("File Name (the magnet data will be saved to your default directory)");
+        label2.setBounds(0, 25, 400, 15);
         add(label2);
         saveData = new JButton("save");
         saveData.setBounds(300, 40, 75, 50);

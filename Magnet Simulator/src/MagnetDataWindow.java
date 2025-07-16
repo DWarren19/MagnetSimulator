@@ -37,7 +37,7 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
         magnetName.setBounds(10, 40, 200, 25);
         magnetName.addKeyListener(this);
         add(magnetName);
-        fileName = new JTextField(test.getCurrentDirectory().getPath() + name);
+        fileName = new JTextField();
         data = new MagnetData(d, d.length==6, "");
     }
     public MagnetDataWindow(int x, int y, double[] d){
@@ -52,11 +52,11 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
         label2 = new JLabel("Magnet Name");
         label2.setBounds(75, 25, 100, 15);
         add(label2);
-        label3 = new JLabel("File Name");
-        label3.setBounds(75, 65, 100, 15);
+        label3 = new JLabel("File Name (the magnet data will be saved to your default directory)");
+        label3.setBounds(0, 65, 400, 15);
         add(label3);
         saveData = new JButton("save");
-        saveData.setBounds(300, 40, 75, 50);
+        saveData.setBounds(300, 17, 75, 50);
         saveData.addActionListener(this);
         add(saveData);
         test = new JFileChooser();
@@ -64,7 +64,7 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
         magnetName.setBounds(10, 40, 200, 25);
         magnetName.addKeyListener(this);
         add(magnetName);
-        fileName = new JTextField(test.getCurrentDirectory().getPath() + "[\\file name here]");
+        fileName = new JTextField();
         fileName.setBounds(10, 80, 200, 25);
         fileName.addKeyListener(this);
         add(fileName);
@@ -74,7 +74,7 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
     @Override
     public void actionPerformed(ActionEvent e) {
         if (!fileName.getText().isEmpty()) {
-            FileHandler.writeSpecificLine(fileName.getText(), data.getName(), data);
+            FileHandler.writeSpecificLine(test.getCurrentDirectory().getPath() + "\\" + fileName.getText() + ".magnet", data.getName(), data);
             if (previous != null) {
                 if (previous.getClass() == FileHandlerGUI.class) {
                     FileHandlerGUI previous2 = (FileHandlerGUI) previous;
