@@ -3,19 +3,26 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MagnetButton extends JButton implements ActionListener {
+public class MagnetButton extends JPanel implements ActionListener {
     private JLabel name;
     private JButton deleteButton;
     private JButton editButton;
     private JButton duplicateButton;
     private FileHandlerGUI previous;
     private String filename;
+    private JButton selectButton;
     public MagnetButton(String n, FileHandlerGUI p, String f) {
         super();
         previous = p;
         filename = f;
-        addActionListener(this);
         setSize(450, 50);
+        setBackground(Color.lightGray);
+
+        selectButton = new JButton("select");
+        selectButton.setBounds(10, 10, 100, 50);
+        selectButton.addActionListener(this);
+        add(selectButton);
+
         name = new JLabel(n);
         name.setBounds(10, 20, 100, 20);
         add(name);
@@ -35,10 +42,17 @@ public class MagnetButton extends JButton implements ActionListener {
         duplicateButton.addActionListener(this);
         add(duplicateButton);
     }
+    /*public void update(Graphics g){
+        System.out.println("outputs updated");
+        deleteButton.setBounds(120, 15, 100, 20);
+        editButton.setBounds(220, 15, 100, 20);
+        duplicateButton.setBounds(320, 15, 100, 20);
+        super.update(g);
+    }*/
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this){
+        if (e.getSource() == selectButton){
             MagnetData data = FileHandler.readMagnetData(filename, name.getText());
             if (data != null){
                 if (data.toString().charAt(0) == '0'){
