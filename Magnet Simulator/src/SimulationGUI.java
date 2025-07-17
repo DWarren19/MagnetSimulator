@@ -204,7 +204,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             if (diameter != 0 && resolution != 0) {
                 stop = false;
                 stopSimulation = false;
-                int size = (int)Math.ceil(diameter*resolution)/2;
+                int size = (int)Math.ceil(diameter*resolution/2);
                 if (size == diameter*resolution/2){
                     size+=1;
                 }
@@ -255,7 +255,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
                     outputData[i] = magneticFieldData[i][i][i];
                     System.out.println(outputData[i]);
                 }
-                MagneticFieldGraph graph1 = new MagneticFieldGraph(this, outputData, 1 / resolution * Math.sqrt(3), highest);
+                MagneticFieldGraph graph1 = new MagneticFieldGraph(this, outputData, 1 / resolution * Math.sqrt(3), highest, lowest);
                 setVisible(false);
             }
         }

@@ -10,12 +10,14 @@ public class OutputDataWindow extends JFrame implements ActionListener{
     private JButton saveData;
     private JTextField fileName;
     private double[][][] data;
+    private JFileChooser test;
     public OutputDataWindow(int x, int y, double[][][] d){
         setBounds(x, y, 400, 150);
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(null);
         setVisible(true);
+        test = new JFileChooser();
         label1 = new JLabel("Save data about the magnetic field to a file?");
         label1.setBounds(0, 0, 400, 15);
         add(label1);
@@ -34,7 +36,7 @@ public class OutputDataWindow extends JFrame implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        FileHandler.write3dArray(data, fileName.getText());
+        FileHandler.write3dArray(data, test.getCurrentDirectory().getPath() + "\\" + fileName.getText());
         dispose();
     }
 }

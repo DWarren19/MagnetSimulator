@@ -7,7 +7,7 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
     private JFrame previous;
     private JButton back;
     private MagneticFieldGraphDrawing drawing;
-    public MagneticFieldGraph(JFrame p, double[] data, double increment, double maximum) {
+    public MagneticFieldGraph(JFrame p, double[] data, double increment, double maximum, double minimum) {
         previous = p;
         setBounds(previous.getBounds());
         setTitle("Magnet Simulator");
@@ -15,7 +15,7 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
         setLayout(null);
         setVisible(true);
 
-        drawing = new MagneticFieldGraphDrawing(data, increment, maximum);
+        drawing = new MagneticFieldGraphDrawing(data, increment, maximum, minimum);
         drawing.setBounds(0, 0, 500, 480);
         add(drawing);
 
