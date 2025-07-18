@@ -19,7 +19,6 @@ public class SquareCoil extends Coil {
             total++;
         }
         angle = Math.PI/2;
-        System.out.println();
         //side +x
         for(int count = 0; count <straightSegments/4; count++){
             MagnetSegment next = new MagnetSegment(corner.outerSideLength(), length/2, length/2-(4*count*(length-2*radius)/straightSegments)-radius, z, -angle, 0, current);
@@ -33,7 +32,6 @@ public class SquareCoil extends Coil {
             segments = checkArray(segments, next);
             total++;
         }
-        System.out.println();
         angle = Math.PI;
         //System.out.println(Math.toDegrees(angle));
         for(int count = 0; count <straightSegments/4; count++){
@@ -48,7 +46,6 @@ public class SquareCoil extends Coil {
             segments = checkArray(segments, next);
             total++;
         }
-        System.out.println();
         angle = 3*Math.PI/2;
         //System.out.println(Math.toDegrees(angle));
         for(int count = 0; count <straightSegments/4; count++){

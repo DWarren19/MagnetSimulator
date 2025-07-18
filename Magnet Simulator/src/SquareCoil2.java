@@ -1,4 +1,4 @@
-public class SquareCoil2 extends Coil {
+public class SquareCoil2 extends Coil {//SquareCoil2 is a version of SquareCoil that outputs data for debugging
     private MagnetSegment[] segments;
     public SquareCoil2(double radius, double length, int precision, double current, double z){//length should always be at least twice radius
         Circle corner = new Circle(radius, precision);
@@ -30,7 +30,6 @@ public class SquareCoil2 extends Coil {
             total++;
         }
         angle = Math.PI/2;
-        System.out.println();
         for(int count = 0; count <straightSegments/4; count++){
             //side +x
             //this section is for testing and should be commented out

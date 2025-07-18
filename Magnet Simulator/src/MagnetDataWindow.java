@@ -37,7 +37,7 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
         magnetName.setBounds(10, 40, 200, 25);
         magnetName.addKeyListener(this);
         add(magnetName);
-        fileName = new JTextField();
+        fileName = new JTextField(name);
         data = new MagnetData(d, d.length==6, "");
     }
     public MagnetDataWindow(int x, int y, double[] d){

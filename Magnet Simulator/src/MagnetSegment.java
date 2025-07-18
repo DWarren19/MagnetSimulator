@@ -37,7 +37,7 @@ public class MagnetSegment {
         double[] total = VectorHandler.vectorMultiply(lengthX, lengthY, lengthZ, direction[0], direction[1], direction[2]);
         //printList(total);
         for(int i = 0; i<3; i++){
-            total[i] = (total[i]*current/Math.pow(r,2))*Math.pow(10, -7);
+            total[i] = (total[i]*current/Math.pow(r,2))*Math.pow(10, -5);//this would be -7 if it was m not cm
         }
         return total;
     }
@@ -46,22 +46,6 @@ public class MagnetSegment {
         double total = length;
         total = (total*current/rSquared)*Math.pow(10, -7)*Math.sin(Math.toRadians(angle));
         return total;
-    }
-    public static double toVector(double[] d){//
-        return(Math.sqrt(Math.pow(d[0],2)+Math.pow(d[1],2)+Math.pow(d[2],2)));
-    }
-    public static double resolveVector(double l, double angle, boolean opposite){//
-//        angle = Math.toRadians(angle);
-        if(opposite){
-            return(Math.sin(angle)*l);
-        } else {
-            return(Math.cos(angle)*l);
-        }
-    }
-    public static void printList(double[] l){//
-        for(double n: l){
-            System.out.println(n);
-        }
     }
 }
 

@@ -3,25 +3,22 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MagnetButton extends JPanel implements ActionListener {
+public class MagnetButton extends JButton implements ActionListener {
     private JLabel name;
     private JButton deleteButton;
     private JButton editButton;
     private JButton duplicateButton;
     private FileHandlerGUI previous;
     private String filename;
-    private JButton selectButton;
     public MagnetButton(String n, FileHandlerGUI p, String f) {
         super();
         previous = p;
+        setLayout(null);
         filename = f;
         setSize(450, 50);
         setBackground(Color.lightGray);
 
-        selectButton = new JButton("Open");
-        selectButton.setBounds(10, 10, 100, 50);
-        selectButton.addActionListener(this);
-        add(selectButton);
+        addActionListener(this);
 
         name = new JLabel(n);
         name.setBounds(10, 20, 100, 20);
@@ -52,16 +49,13 @@ public class MagnetButton extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == selectButton){
+        if (e.getSource() == this){
             MagnetData data = FileHandler.readMagnetData(filename, name.getText());
             if (data != null){
                 if (data.toString().charAt(0) == '0'){
                     double[] outputData = new double[4];
                     for (int i = 0; i < 4; i++) {
                         outputData[i] = data.getData()[i];
-                    }
-                    for (double d: outputData) {
-                        System.out.println(d);
                     }
                     RoundMagnet magnet = new RoundMagnet(outputData[0], outputData[1], outputData[2], outputData[3], data.getData()[4], 100);
                     Diagram magnetDiagram = new Diagram(outputData, true);
@@ -75,7 +69,6 @@ public class MagnetButton extends JPanel implements ActionListener {
                         outputData[i] = data.getData()[i];
                     }
                     RoundMagnet magnet = new RoundMagnet(outputData[0], outputData[1], outputData[2], outputData[3], data.getData()[5], 100, data.getData()[4]);
-                    System.out.println(data.getData()[5]);
                     Diagram magnetDiagram = new Diagram(outputData, false);
                     SimulationGUI magnetDetails = new SimulationGUI(outputData, data.getData()[4], magnetDiagram, previous, magnet);
                     magnetDiagram.setMagnetData(outputData);
@@ -102,9 +95,6 @@ public class MagnetButton extends JPanel implements ActionListener {
                     for (int i = 0; i < 5; i++) {
                         outputData[i] = data.getData()[i];
                     }
-                    for (double d: outputData) {
-                        System.out.println(d);
-                    }
                     SquareMagnetGUI magnetDetails = new SquareMagnetGUI(previous, outputData, data.getData()[5]);
                     previous.setVisible(false);
                 }
@@ -112,13 +102,10 @@ public class MagnetButton extends JPanel implements ActionListener {
         } else if (e.getSource() == duplicateButton) {
             MagnetData data = FileHandler.readMagnetData(filename, name.getText());
             if (data != null){
-                double[] outputData = new double[4];
-                for (int i = 0; i < 4; i++) {
-                    outputData[i] = data.getData()[i];
+                while (filename.contains("\\")) {
+                    filename = filename.substring(filename.indexOf("\\")+1);
                 }
-                for (double d: outputData) {
-                    System.out.println(d);
-                }
+                filename = filename.substring(0, filename.indexOf(".magnet"));// this will not work for other file types
                 MagnetDataWindow magnetDetails = new MagnetDataWindow(previous.getX(), previous.getY(), data.getData(), previous, filename);
             }
         }

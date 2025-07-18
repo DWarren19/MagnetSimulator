@@ -20,7 +20,7 @@ public class FileHandler {
                     lines.add(inputData.toString());
                 }
                 line++;
-                System.out.println(nextLine);
+                //System.out.println(nextLine);
             }
         } catch (IOException e) {
             line = -1;
@@ -33,7 +33,6 @@ public class FileHandler {
             while (line != currentLine && currentLine<lines.size()){
                 pw.println(lines.get(currentLine));
                 currentLine++;
-                System.out.println(currentLine);
             }
             if (data != null) {
                 pw.println(data);
@@ -42,7 +41,6 @@ public class FileHandler {
             while (currentLine<lines.size()){
                 pw.println(lines.get(currentLine));
                 currentLine++;
-                System.out.println(currentLine + "Data Written Successfully");
             }
             return "Data Written Successfully";
         } catch (IOException e) {

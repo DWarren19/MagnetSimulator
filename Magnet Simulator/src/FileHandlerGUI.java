@@ -26,10 +26,10 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
         setLayout(null);
         setVisible(true);
 
-        fileLabel = new JLabel("File Name:");
-        fileLabel.setBounds(10, 10, 100, 20);
-        fileLabel.setVisible(false);
-        add(fileLabel);
+        //fileLabel = new JLabel("File Name:");
+        //fileLabel.setBounds(10, 10, 100, 20);
+        //fileLabel.setVisible(false);
+        //add(fileLabel);
 
         fileName = "";
 
@@ -66,7 +66,7 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
         add(fileChooser);
 
         back = new JButton("Back");
-        back.setBounds(150, 10, 100, 50);
+        back.setBounds(10, 10, 100, 50);
         back.addActionListener(this);
         add(back);
         back.setVisible(false);
@@ -81,7 +81,7 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
         if(resetName) {
             fileName = "";
             fileChooser.setVisible(true);
-            fileLabel.setVisible(false);
+            //fileLabel.setVisible(false);
             back.setVisible(false);
         }
         update(getGraphics());
@@ -95,9 +95,8 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
         } else {
             if (fileChooser.getSelectedFile() != null) {
                 fileName = fileChooser.getSelectedFile().getPath();
-                System.out.println(fileName);
                 fileChooser.setVisible(false);
-                fileLabel.setVisible(true);
+                //fileLabel.setVisible(true);
                 back.setVisible(true);
                 String[] magnetNames = FileHandler.readMagnetArray(fileName);
                 if (magnetNames != null) {
@@ -108,7 +107,6 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
                         add(buttons[i]);
                         update(getGraphics());
                         buttons[i].update(buttons[i].getGraphics());
-                        System.out.println("button added");
                     }
                 }
             }

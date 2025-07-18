@@ -209,7 +209,6 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
                     size+=1;
                 }
                 magneticFieldData = new double[size][size][size];
-                System.out.println(size);
                 simulateMagnet();
             }
             //LoadingScreen loading = new LoadingScreen(getX(), getY(), (int)Math.pow((resolution*diameter)+1, 3)/2);
