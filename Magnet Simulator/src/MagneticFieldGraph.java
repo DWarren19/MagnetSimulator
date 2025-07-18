@@ -51,9 +51,9 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
         add(radial);
 
         diagonal = new JButton("Diagonal");
-        axial.setBounds(300, 480, 100, 30);
-        axial.addActionListener(this);
-        add(axial);
+        diagonal.setBounds(300, 480, 100, 30);
+        diagonal.addActionListener(this);
+        add(diagonal);
     }
 
     @Override
@@ -67,25 +67,31 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
             for (int i = 0; i < data.length; i++) {
                 outputData[i] = data[i][i][i];
             }
+            remove(drawing);
             drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum);
             drawing.setBounds(0, 0, 500, 480);
             add(drawing);
+            update(getGraphics());
         } else if (e.getSource() == axial) {
             double[] outputData = new double[data.length];
             for (int i = 0; i < data.length; i++) {
                 outputData[i] = data[0][0][i];
             }
+            remove(drawing);
             drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum);
             drawing.setBounds(0, 0, 500, 480);
             add(drawing);
+            update(getGraphics());
         }else if (e.getSource() == radial) {
             double[] outputData = new double[data.length];
             for (int i = 0; i < data.length; i++) {
                 outputData[i] = data[i][0][0];
             }
+            remove(drawing);
             drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum);
             drawing.setBounds(0, 0, 500, 480);
             add(drawing);
+            update(getGraphics());
         }
     }
 }
