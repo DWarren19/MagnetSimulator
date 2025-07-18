@@ -34,10 +34,8 @@ public class RoundMagnet {
         //outer is the outer length (radius*2)
         //initialRadius is the radius of the inside of the corners
         int sizeZ = ((int)Math.round((length-split)*density/2))*2;//this needs to be an even number so that there are the same numbers of coils on each side
-        System.out.println(length-split);
         double incrementZ = (length-split)/sizeZ;
         int sizeR = (int)Math.round((outer-inner)*density/2);//density is halved because inner and outer represent the length, not radius, in this constructor
-        System.out.println(outer-inner);
         double incrementR = (outer-inner)/sizeR;
         double windings = ((length-split)*density)*((outer-inner)*density/2);
         double current = windings/(sizeZ*sizeR);//current changes to account for nonexistent windings-some windings will have been lost due to rounding errors
