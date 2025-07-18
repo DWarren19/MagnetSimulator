@@ -250,12 +250,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             }
         } else if (e.getSource() == buttons[4]){
             if(magneticFieldData != null) {
-                double[] outputData = new double[magneticFieldData.length];
-                for (int i = 0; i < magneticFieldData.length; i++) {
-                    outputData[i] = magneticFieldData[i][i][i];
-                    System.out.println(outputData[i]);
-                }
-                MagneticFieldGraph graph1 = new MagneticFieldGraph(this, outputData, 1 / resolution * Math.sqrt(3), highest, lowest);
+                MagneticFieldGraph graph1 = new MagneticFieldGraph(this, magneticFieldData, 1 / resolution * Math.sqrt(3), highest, lowest);
                 setVisible(false);
             }
         }
