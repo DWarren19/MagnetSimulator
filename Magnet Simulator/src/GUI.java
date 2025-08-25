@@ -40,7 +40,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             inputData[i] = data[i];
         }
         densityInput.setText(String.valueOf(density*density).substring(0, 7));
-        this.density = String.valueOf(density);
+        this.density = String.valueOf(density*density);
         inputData = data;
         crossSectionDiagram.setMagnetData(data);
     }
@@ -52,8 +52,8 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             inputs[i].setText(String.valueOf(data[i]));
             inputData[i] = data[i];
         }
-        densityInput.setText(String.valueOf(density*density).substring(0, 7));
-        this.density = String.valueOf(density);
+        densityInput.setText((density*density+"    ").substring(0, 7));
+        this.density = String.valueOf(density*density);
         inputData = data;
         crossSectionDiagram.setMagnetData(data);
     }
@@ -148,8 +148,10 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
                 double densityCm;
                 if (perCm) {
                     densityCm = Math.sqrt(strToInt(density));
-                } else {
+                } else if (round) {
                     densityCm = Math.sqrt(strToInt(density) / ((inputData[0] - inputData[1]) * (inputData[3] - inputData[2]) / 2));
+                } else {
+                    densityCm = Math.sqrt(strToInt(density) / ((inputData[0] - inputData[1]) * (inputData[3] - inputData[2]) / 4));
                 }
                 if (round) {
                     magnet = new RoundMagnet(inputData[0], inputData[1], inputData[2], inputData[3], densityCm, 100);
@@ -168,8 +170,10 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
                 double densityCm;
                 if (perCm) {
                     densityCm = Math.sqrt(strToInt(density));
-                } else {
+                } else if (round) {
                     densityCm = Math.sqrt(strToInt(density) / ((inputData[0] - inputData[1]) * (inputData[3] - inputData[2]) / 2));
+                } else {
+                    densityCm = Math.sqrt(strToInt(density) / ((inputData[0] - inputData[1]) * (inputData[3] - inputData[2]) / 4));
                 }
                 outputData[inputData.length] = densityCm;
                 MagnetDataWindow saveData = new MagnetDataWindow(getX(), getY(), outputData);

@@ -20,12 +20,17 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
     private JLabel homogeneity;
     private JLabel magneticField;
     private boolean stop;
+    private boolean stopSimulation2d;
     private double diameter;
     private double resolution;
+
+    private JButton axial;
+    private JButton radial;
 
     private double highest;
     private double lowest;
     private double[][][] magneticFieldData;
+    private double[][] magneticFieldData2d;
     private double x;
     private double y;
     private double z;
@@ -35,8 +40,10 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
     private JLabel progressLabel;
     private JLabel progressLabel2;
 
-    public SimulationGUI(double[] d, double density, Diagram m, JFrame p, RoundMagnet r){
-        data = new double[d.length+1];
+    private boolean axialData;
+
+    public SimulationGUI(double[] d, double density, Diagram m, JFrame p, RoundMagnet r) {
+        data = new double[d.length + 1];
         for (int i = 0; i < d.length; i++) {
             data[i] = d[i];
         }
@@ -51,11 +58,12 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
         setBounds(previous.getBounds());
         add(magnetDiagram);
         stop = true;
+        stopSimulation2d = true;
         stopSimulation = true;
         magnet = r;
 
         progress = new JProgressBar(0, 100);
-        progress.setBounds(10, 125, 300, 100);
+        progress.setBounds(10, 125, 300, 25);
         add(progress);
 
         setTitle("Magnet Simulator");
@@ -65,23 +73,36 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
 
         for (int i = 0; i < inputs.length; i++) {
             inputs[i] = new JTextField();
-            inputs[i].setBounds(10, 10+50*i, 150, 50);
+            inputs[i].setBounds(10, 10 + 50 * i, 150, 50);
             inputs[i].setOpaque(false);
             inputs[i].addKeyListener(this);
             add(inputs[i]);
             inputLabels[i] = new JLabel(labelNames[i]);
-            inputLabels[i].setBounds(100, 10+50*i, 400, 50);
+            inputLabels[i].setBounds(100, 10 + 50 * i, 400, 50);
             add(inputLabels[i]);
         }
         for (int i = 0; i < buttons.length; i++) {
             buttons[i] = new JButton(buttonNames[i]);
-            buttons[i].setBounds(360, 10+60*i, 100, 50);
+            buttons[i].setBounds(360, 10 + 60 * i, 100, 50);
             buttons[i].setBackground(Color.lightGray);
             buttons[i].setOpaque(false);
             buttons[i].addActionListener(this);
             add(buttons[i]);
         }
         buttons[1].addMouseListener(this);
+
+        axial = new JButton("Run Axial");
+        axial.setBounds(10, 175, 100, 50);
+        axial.setBackground(Color.lightGray);
+        axial.setOpaque(false);
+        axial.addActionListener(this);
+        add(axial);
+        radial = new JButton("Run Radial");
+        radial.setBounds(120, 175, 100, 50);
+        radial.setBackground(Color.lightGray);
+        radial.setOpaque(false);
+        radial.addActionListener(this);
+        add(radial);
 
         buttonLabel = new JLabel("Graph");
         buttonLabel.setBounds(393, 280, 100, 15);
@@ -116,41 +137,120 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
         progressLabel.setBounds(10, 110, 400, 15);
         add(progressLabel);
         progressLabel2 = new JLabel("cursor over 'Stop' to pause, press 'Stop' to stop");
-        progressLabel2.setBounds(10, 225, 400, 15);
+        progressLabel2.setBounds(10, 150, 400, 15);
         add(progressLabel2);
     }
-    public void simulateMagnet(){
-        while (!stop){
+
+    public void simulateMagnet() {
+        while (!stop) {
             double s = VectorHandler.toVector(magnet.getStrength(x, y, z));
-            if (s > highest){
+            if (s > highest) {
                 highest = s;
-            } else if (s < lowest){
+            } else if (s < lowest) {
                 lowest = s;
             }
-            magneticFieldData[(int) (x * resolution)][(int) (y * resolution)][(int) (z * resolution)] = s;
-            progress.setValue((int)(100*((z+y/(resolution*diameter/2))/(diameter/2))));
-            x += 1/resolution;
-            if (x > diameter/2){
+            magneticFieldData[(int) (x * resolution * 1.01)][(int) (y * resolution * 1.01)][(int) (z * resolution * 1.01)] = s;
+            progress.setValue((int) (100 * ((z + y / (resolution * diameter / 2)) / (diameter / 2))));
+            x += 1 / resolution;
+            x *= resolution;
+            x = Math.round(x);
+            x /= resolution;
+            if (x > diameter / 2) {
                 x = 0;
-                y += 1/resolution;
-                if (y > diameter/2){
+                y += 1 / resolution;
+                y *= resolution;
+                y = Math.round(y);
+                y /= resolution;
+                if (y > diameter / 2) {
                     y = 0;
-                    z += 1/resolution;
-                    if (z > diameter/2){
+                    z += 1 / resolution;
+                    z *= resolution;
+                    z = Math.round(z);
+                    z /= resolution;
+                    if (z > diameter / 2) {
                         stop = true;
                         stopSimulation = true;
                         progress.setValue(0);
-                        homogeneity.setText(((float)(int)(10000 * (highest - lowest) / (highest)))/100 +"  %");
+                        homogeneity.setText(((float) (int) (10000 * (highest - lowest) / (highest))) / 100 + "  %");
+                        magneticFieldData2d = null;
                     }
                 }
             }
             progress.update(progress.getGraphics());
-            if(getMousePosition()!=null) {
+            if (getMousePosition() != null) {
                 if (getMousePosition().x > 360 && getMousePosition().x < 460 && getMousePosition().y > 100 && getMousePosition().y < 150) {
                     stop = true;
                 }
             }
         }
+    }
+
+    public void simulateMagnet2d(boolean axial){
+        while (!stop) {
+            double s;
+            if(axial) {
+                s = VectorHandler.toVector(magnet.getStrength(x, 0, y));
+            } else {
+                s = VectorHandler.toVector(magnet.getStrength(x, y, 0));
+            }
+            if (s > highest) {
+                highest = s;
+            } else if (s < lowest) {
+                lowest = s;
+            }
+            magneticFieldData2d[(int) (x * resolution * 1.01)][(int) (y * resolution * 1.01)] = s;//values are multiplied by 1.01 to avoid rounding errors
+            progress.setValue((int) (100 * ((y + x / (resolution * diameter / 2)) / (diameter / 2))));
+            x += 1 / resolution;
+            x *= resolution;
+            x = Math.round(x);
+            x /= resolution;
+            if (x > diameter / 2) {
+                x = 0;
+                y += 1 / resolution;
+                y *= resolution;
+                y = Math.round(y);
+                y /= resolution;
+                if (y > diameter / 2) {
+                    stop = true;
+                    stopSimulation2d = true;
+                    progress.setValue(0);
+                    homogeneity.setText(((float) (int) (10000 * (highest - lowest) / (highest))) / 100 + "  %");
+                    magneticFieldData = null;
+                }
+            }
+            progress.update(progress.getGraphics());
+            if (getMousePosition() != null) {
+                if (getMousePosition().x > 360 && getMousePosition().x < 460 && getMousePosition().y > 100 && getMousePosition().y < 150) {
+                    stop = true;
+                }
+            }
+        }
+    }
+    public void prepareMagnet() {
+        if (resolution / (diameter / 2) != (int) (resolution / (diameter / 2))) {
+            resolution /= diameter / 2;
+            resolution = (int) resolution;
+            resolution *= diameter / 2;
+        }
+        highest = VectorHandler.toVector(magnet.getStrength(0, 0, 0));
+        double outputValue = highest;
+        int orderOfMagnitudeInt = 2;
+        while (outputValue > 1000) {
+            outputValue /= 10;
+            orderOfMagnitudeInt += 1;
+        }
+        while (outputValue < 100 && outputValue != 0) {
+            outputValue *= 10;
+            orderOfMagnitudeInt -= 1;
+        }
+        outputValue = Math.round(outputValue);
+        outputValue /= 100;
+        magneticField.setText(String.valueOf(outputValue));
+        orderOfMagnitude.setText(String.valueOf(orderOfMagnitudeInt));
+        lowest = highest;
+        x = 0;
+        y = 0;
+        z = 0;
     }
 
 
@@ -176,37 +276,14 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == buttons[0]){
-            if (resolution/(diameter/2) != (int)(resolution/(diameter/2))){
-                resolution /= diameter/2;
-                resolution = (int)resolution;
-                resolution *= diameter/2;
-            }
-            highest = VectorHandler.toVector(magnet.getStrength(0, 0, 0));
-            double outputValue = highest;
-            int orderOfMagnitudeInt = 2;
-            while (outputValue>1000){
-                outputValue/=10;
-                orderOfMagnitudeInt+=1;
-            }
-            while (outputValue<100 && outputValue != 0){
-                outputValue*=10;
-                orderOfMagnitudeInt-=1;
-            }
-            outputValue = Math.round(outputValue);
-            outputValue/=100;
-            magneticField.setText(String.valueOf(outputValue));
-            orderOfMagnitude.setText(String.valueOf(orderOfMagnitudeInt));
-            lowest = highest;
-            x = 0;
-            y = 0;
-            z = 0;
+        if (e.getSource() == buttons[0]) {
+            prepareMagnet();
             if (diameter != 0 && resolution != 0) {
                 stop = false;
                 stopSimulation = false;
-                int size = (int)Math.ceil(diameter*resolution/2);
-                if (size == diameter*resolution/2){
-                    size+=1;
+                int size = (int) Math.ceil(diameter * resolution / 2);
+                if (size == diameter * resolution / 2) {
+                    size += 1;
                 }
                 magneticFieldData = new double[size][size][size];
                 simulateMagnet();
@@ -217,6 +294,32 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             //}
             //loading.dispose();
             //homogeneity.setText(2*(highest-lowest)/(highest+lowest));
+        } else if (e.getSource() == axial){
+            prepareMagnet();
+            if (diameter != 0 && resolution != 0) {
+                stop = false;
+                stopSimulation2d = false;
+                int size = (int) Math.ceil(diameter * resolution / 2);
+                if (size == diameter * resolution / 2) {
+                    size += 1;
+                }
+                axialData = true;
+                magneticFieldData2d = new double[size][size];
+                simulateMagnet2d(true);
+            }
+        } else if (e.getSource() == radial){
+            prepareMagnet();
+            if (diameter != 0 && resolution != 0) {
+                stop = false;
+                stopSimulation2d = false;
+                int size = (int) Math.ceil(diameter * resolution / 2);
+                if (size == diameter * resolution / 2) {
+                    size += 1;
+                }
+                axialData = false;
+                magneticFieldData2d = new double[size][size];
+                simulateMagnet2d(false);
+            }
         } else if (e.getSource() == buttons[1]){
             stopSimulation = true;
             progress.setValue(0);
@@ -237,6 +340,8 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
         } else if (e.getSource() == buttons[3]){
             if(magneticFieldData != null) {
                 OutputDataWindow outputWindow = new OutputDataWindow(getX(), getY(), magneticFieldData);
+            } else if (magneticFieldData2d != null){
+                OutputDataWindow2d outputWindow = new OutputDataWindow2d(getX(), getY(), magneticFieldData2d);
             } else {
                 JFrame outputWindow = new JFrame("Magnet Simulator");
                 outputWindow.setBounds(getX(), getY(), 300, 100);
@@ -251,6 +356,8 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             if(magneticFieldData != null) {
                 MagneticFieldGraph graph1 = new MagneticFieldGraph(this, magneticFieldData, 1 / resolution * Math.sqrt(3), highest, lowest);
                 setVisible(false);
+            } else if (magneticFieldData2d != null) {
+                MagneticFieldGraph2d graph1 = new MagneticFieldGraph2d(this, magneticFieldData2d, 1/resolution, highest, lowest, axialData);
             }
         }
     }
@@ -280,6 +387,9 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
         if(!stopSimulation){
             stop = false;
             simulateMagnet();
+        } else if (!stopSimulation2d){
+            stop = false;
+            simulateMagnet2d(axialData);
         }
     }
 }

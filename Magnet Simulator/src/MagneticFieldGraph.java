@@ -31,7 +31,7 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
             outputData[i] = data[i][i][i];
         }
 
-        drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum);
+        drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum, true);
         drawing.setBounds(0, 0, 500, 480);
         add(drawing);
 
@@ -40,12 +40,12 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
         back.addActionListener(this);
         add(back);
 
-        axial = new JButton("Axial");
+        axial = new JButton("Radial");
         axial.setBounds(100, 480, 100, 30);
         axial.addActionListener(this);
         add(axial);
 
-        radial = new JButton("Radial");
+        radial = new JButton("Axial");
         radial.setBounds(200, 480, 100, 30);
         radial.addActionListener(this);
         add(radial);
@@ -68,7 +68,7 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
                 outputData[i] = data[i][i][i];
             }
             remove(drawing);
-            drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum);
+            drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum, true);
             drawing.setBounds(0, 0, 500, 480);
             add(drawing);
             update(getGraphics());
@@ -78,7 +78,7 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
                 outputData[i] = data[0][0][i];
             }
             remove(drawing);
-            drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum);
+            drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum, false);
             drawing.setBounds(0, 0, 500, 480);
             add(drawing);
             update(getGraphics());
@@ -88,7 +88,7 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
                 outputData[i] = data[i][0][0];
             }
             remove(drawing);
-            drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum);
+            drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum, false);
             drawing.setBounds(0, 0, 500, 480);
             add(drawing);
             update(getGraphics());

@@ -65,11 +65,11 @@ public class Diagram extends JPanel {
         Graphics2D g2 = (Graphics2D)g;
         g2.setColor(Color.white);
         g2.fillRect(1, 1, super.getWidth()-2, super.getHeight()-2);
-        g2.setColor(Color.black);
+        g2.setColor(Color.orange);
         g2.fillRect(160-magnetWidth/2, 100-(int) outputData[3], (int)(magnetWidth/2- outputData[1]), (int) outputData[3]*2);
         g2.setColor(Color.lightGray);
         g2.fillRect(160-magnetWidth/2, 100-(int) outputData[2], (int)(magnetWidth/2- outputData[1]), (int) outputData[2]*2);
-        g2.setColor(Color.black);
+        g2.setColor(Color.orange);
         g2.fillRect(160+(int)(outputData[1]), 100-(int) outputData[3], (int)(magnetWidth/2- outputData[1]), (int) outputData[3]*2);
         g2.setColor(Color.lightGray);
         g2.fillRect(160+(int)(outputData[1]), 100-(int) outputData[2], (int)(magnetWidth/2- outputData[1]), (int) outputData[2]*2);

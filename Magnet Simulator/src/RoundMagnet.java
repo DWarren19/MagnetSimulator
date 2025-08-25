@@ -29,7 +29,7 @@ public class RoundMagnet {
             }
         }
     }
-    public RoundMagnet(double length, double split, double inner, double outer, double density, int precision, double initialRadius){
+    public RoundMagnet(double length, double split, double inner, double outer, double density, int precision, double initialRadius){//sets the magnet up as square with rounded corners
         //inner is the inner length (radius*2)
         //outer is the outer length (radius*2)
         //initialRadius is the radius of the inside of the corners
@@ -43,6 +43,7 @@ public class RoundMagnet {
         int count = 0;
         for(double z = -length/2+(0.5*incrementZ); z<-split/2; z+=incrementZ){
             for(double l = (0.5*incrementR); l<(outer-inner); l+=incrementR){
+                System.out.println(count + "\n");
                 coils[count] = new SquareCoil(initialRadius+l/2, l+inner, precision, -current, z);
                 count++;
             }
@@ -52,6 +53,7 @@ public class RoundMagnet {
             for(double l = (0.5*incrementR); l<(outer-inner); l+=incrementR){
                 coils[count+count2] = new SquareCoil(initialRadius+l/2, l+inner, precision, -current, z);
                 count2++;
+                System.out.println(count2 + "\n");
             }
         }
     }

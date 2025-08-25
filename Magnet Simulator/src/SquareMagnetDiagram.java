@@ -17,6 +17,7 @@ public class SquareMagnetDiagram extends JPanel {
         outputDiameter = (int)((innerRadius*2+outerLength-innerLength)*80/outerLength);
         offset = (int)((10+(outerLength-innerLength)/2)*80/outerLength);
         innerDiameter = (int)((innerRadius*2)*80/outerLength);
+        repaint();
     }
     public void setData(double i, double o, double r){
         innerLength = i;
