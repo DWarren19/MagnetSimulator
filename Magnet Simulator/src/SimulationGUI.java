@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class SimulationGUI extends JFrame implements KeyListener, ActionListener, MouseListener {
+public class SimulationGUI extends JFrame implements KeyListener, ActionListener, MouseListener {//the screen that gives outputs
     private double[] data;
     private RoundMagnet magnet;
     private Diagram magnetDiagram;
@@ -29,14 +29,16 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
 
     private double highest;
     private double lowest;
-    private double[][][] magneticFieldData;
+    private double[][][][] magneticFieldData;
+    private String[][][][] magneticFieldDataText;
     private double[][] magneticFieldData2d;
+    private String[][] magneticFieldDataText2d;
     private double x;
     private double y;
     private double z;
     private JProgressBar progress;
 
-    private boolean stopSimulation;//two variables are used to stop the loop so that it can be paused
+    private boolean stopSimulation;//two variables are used to stop the loop so that it can be paused and resume
     private JLabel progressLabel;
     private JLabel progressLabel2;
 
@@ -143,14 +145,20 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
 
     public void simulateMagnet() {
         while (!stop) {
-            double s = VectorHandler.toVector(magnet.getStrength(x, y, z));
+            double[] strength = magnet.getStrength(x, y, z);
+            double s = VectorHandler.toVector(strength);
             if (s > highest) {
                 highest = s;
             } else if (s < lowest) {
                 lowest = s;
             }
-            magneticFieldData[(int) (x * resolution * 1.01)][(int) (y * resolution * 1.01)][(int) (z * resolution * 1.01)] = s;
+            //stores an array of vector and scalar quantities
+            magneticFieldData[0][(int) (x * resolution * 1.01)][(int) (y * resolution * 1.01)+1][(int) (z * resolution * 1.01)+1] = s;
+            magneticFieldData[1][(int) (x * resolution * 1.01)][(int) (y * resolution * 1.01)+1][(int) (z * resolution * 1.01)+1] = strength[0];
+            magneticFieldData[2][(int) (x * resolution * 1.01)][(int) (y * resolution * 1.01)+1][(int) (z * resolution * 1.01)+1] = strength[1];
+            magneticFieldData[3][(int) (x * resolution * 1.01)][(int) (y * resolution * 1.01)+1][(int) (z * resolution * 1.01)+1] = strength[2];
             progress.setValue((int) (100 * ((z + y / (resolution * diameter / 2)) / (diameter / 2))));
+            //loops through every point within the specified area (because this area is symmetrical about all 3 planes, only positive values are calculated
             x += 1 / resolution;
             x *= resolution;
             x = Math.round(x);
@@ -198,7 +206,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             } else if (s < lowest) {
                 lowest = s;
             }
-            magneticFieldData2d[(int) (x * resolution * 1.01)][(int) (y * resolution * 1.01)] = s;//values are multiplied by 1.01 to avoid rounding errors
+            magneticFieldData2d[(int) (x * resolution * 1.01)+1][(int) (y * resolution * 1.01)+1] = s;//values are multiplied by 1.01 to avoid rounding errors
             progress.setValue((int) (100 * ((y + x / (resolution * diameter / 2)) / (diameter / 2))));
             x += 1 / resolution;
             x *= resolution;
@@ -285,8 +293,23 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
                 if (size == diameter * resolution / 2) {
                     size += 1;
                 }
-                magneticFieldData = new double[size][size][size];
+                magneticFieldData = new double[4][size][size+1][size+1];
+                //x=layer y=column z=row
                 simulateMagnet();
+                magneticFieldDataText = new String[4][size][size+1][size+1];
+                for (int i = 0; i < 4; i++) {
+                    for (int j = 0; j < size; j++) {
+                        magneticFieldDataText[i][j][0][0] = "X = " + j*resolution;
+                        for (int k = 1; k < size+1; k++) {
+                            magneticFieldDataText[i][j][k][0] = "Y = " + (k-1)/resolution + "cm";
+                            magneticFieldDataText[i][j][0][k] = "Z = " + (k-1)/resolution + "cm";
+                            for (int l = 1; l < size+1; l++) {
+                                magneticFieldDataText[i][j][k][l] = String.valueOf(magneticFieldData[i][j][k][l]);
+                            }
+                        }
+                    }
+                }
+
             }
             //LoadingScreen loading = new LoadingScreen(getX(), getY(), (int)Math.pow((resolution*diameter)+1, 3)/2);
             //while (!stop){//the value for homogeneity here will be a slight underestimate, since the area is a cube, not a sphere
@@ -304,8 +327,17 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
                     size += 1;
                 }
                 axialData = true;
-                magneticFieldData2d = new double[size][size];
+                magneticFieldData2d = new double[size+1][size+1];
                 simulateMagnet2d(true);
+                magneticFieldDataText2d = new String[size+1][size+1];
+                magneticFieldDataText2d[0][0] = "Axial data (central axis is y=0)";
+                for (int i = 1; i < size+1; i++) {
+                    magneticFieldDataText2d[i][0] = "Y = " + (i-1)/resolution + "cm";
+                    magneticFieldDataText2d[0][i] = "Z = " + (i-1)/resolution + "cm";
+                    for (int j = 1; j < size+1; j++) {
+                        magneticFieldDataText2d[i][j] = String.valueOf(magneticFieldData2d[i][j]);
+                    }
+                }
             }
         } else if (e.getSource() == radial){
             prepareMagnet();
@@ -319,6 +351,13 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
                 axialData = false;
                 magneticFieldData2d = new double[size][size];
                 simulateMagnet2d(false);
+                for (int i = 1; i < size+1; i++) {
+                    magneticFieldDataText2d[i][0] = "X = " + (i-1)/resolution + "cm";
+                    magneticFieldDataText2d[0][i] = "Y = " + (i-1)/resolution + "cm";
+                    for (int j = 1; j < size+1; j++) {
+                        magneticFieldDataText2d[i][j] = String.valueOf(magneticFieldData2d[i][j]);
+                    }
+                }
             }
         } else if (e.getSource() == buttons[1]){
             stopSimulation = true;
@@ -339,9 +378,9 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             dispose();
         } else if (e.getSource() == buttons[3]){
             if(magneticFieldData != null) {
-                OutputDataWindow outputWindow = new OutputDataWindow(getX(), getY(), magneticFieldData);
+                OutputDataWindow outputWindow = new OutputDataWindow(getX(), getY(), magneticFieldDataText);
             } else if (magneticFieldData2d != null){
-                OutputDataWindow2d outputWindow = new OutputDataWindow2d(getX(), getY(), magneticFieldData2d);
+                OutputDataWindow2d outputWindow = new OutputDataWindow2d(getX(), getY(), magneticFieldDataText2d);
             } else {
                 JFrame outputWindow = new JFrame("Magnet Simulator");
                 outputWindow.setBounds(getX(), getY(), 300, 100);
@@ -354,7 +393,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             }
         } else if (e.getSource() == buttons[4]){
             if(magneticFieldData != null) {
-                MagneticFieldGraph graph1 = new MagneticFieldGraph(this, magneticFieldData, 1 / resolution * Math.sqrt(3), highest, lowest);
+                MagneticFieldGraph graph1 = new MagneticFieldGraph(this, magneticFieldData[0], 1 / resolution * Math.sqrt(3), highest, lowest);
                 setVisible(false);
             } else if (magneticFieldData2d != null) {
                 MagneticFieldGraph2d graph1 = new MagneticFieldGraph2d(this, magneticFieldData2d, 1/resolution, highest, lowest, axialData);

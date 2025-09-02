@@ -2,11 +2,11 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class FileHandler {
-    public static String writeSpecificLine(String fileName, String name, MagnetData data){
+    //magnet data is stored as text in the following format: round/square | name | length | split | inner | outer | corner radius (square magnets only) | density
+    public static String writeSpecificLine(String fileName, String name, MagnetData data){//writes a specific line of a file
         int line = 0;
         ArrayList<String> lines = new ArrayList<>();
-        //File magnetDataFile = new File("Documents/Magnet Data/"+fileName);
-        try (
+        try (//reads the file and stores all lines except the updated one as an arraylist
                 FileReader fr = new FileReader(fileName);
                 BufferedReader br = new BufferedReader(fr);
 
@@ -20,12 +20,11 @@ public class FileHandler {
                     lines.add(inputData.toString());
                 }
                 line++;
-                //System.out.println(nextLine);
             }
         } catch (IOException e) {
             line = -1;
         }
-        try (
+        try (//updates the file with the new line at the end
                 FileWriter fw = new FileWriter(fileName);
                 PrintWriter pw = new PrintWriter(fw);
         ) {
@@ -47,7 +46,7 @@ public class FileHandler {
             return null;
         }
     }
-    public static String writeMagnetData(MagnetData data, String fileName){
+    public static String writeMagnetData(MagnetData data, String fileName){//used for testing only
         String currentData = "";
         try (
                 FileReader fr = new FileReader(fileName);
@@ -69,8 +68,7 @@ public class FileHandler {
             return "data not written";
         }
     }
-    public static MagnetData readMagnetData(String fileName, String name){
-        //File magnetDataFile = new File("Documents/Magnet Data/"+fileName);
+    public static MagnetData readMagnetData(String fileName, String name){//creates a MagnetData object from a line in a file
         try (
                 FileReader fr = new FileReader(fileName);
                 BufferedReader br = new BufferedReader(fr);
@@ -87,8 +85,7 @@ public class FileHandler {
             return null;
         }
     }
-    public static String[] readMagnetArray(String name){
-        //File magnetDataFile = new File("Documents/Magnet Data/"+name);
+    public static String[] readMagnetArray(String name){//returns the names of the magnets in a file
         try (
                 FileReader fr = new FileReader(name);
                 BufferedReader br = new BufferedReader(fr);
@@ -119,15 +116,14 @@ public class FileHandler {
             return null;
         }
     }
-    public static String write3dArray(double[][][] a, String name){
-        //File magnetDataFile = new File("Documents/"+name);
+    public static String write3dArray(String[][][] a, String name){//writes a 3d array to a file
         try (
                 FileWriter fw = new FileWriter(name+".txt");
                 PrintWriter pw = new PrintWriter(fw);
         ) {
-            for(double[][] b: a){
-                for(double[] c: b){
-                    for(double d: c){
+            for(String[][] b: a){
+                for(String[] c: b){
+                    for(String d: c){
                         pw.print(d);
                         pw.print('|');
                     }
@@ -140,14 +136,13 @@ public class FileHandler {
             return "data not written";
         }
     }
-    public static String write2dArray(double[][] a, String name){
-        //File magnetDataFile = new File("Documents/"+name);
+    public static String write2dArray(String[][] a, String name){//writes a 2d array to a file
         try (
                 FileWriter fw = new FileWriter(name+".txt");
                 PrintWriter pw = new PrintWriter(fw);
         ) {
-            for(double[] b: a){
-                for(double c: b){
+            for(String[] b: a){
+                for(String c: b){
                     pw.print(c);
                     pw.print('|');
                 }

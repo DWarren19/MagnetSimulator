@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class LoginGUI extends JFrame implements ActionListener {
+public class LoginGUI extends JFrame implements ActionListener {//this is the first screen that the user sees
     private JButton round;
     private JButton square;
     private JButton saved;
-    public LoginGUI(){
+    public LoginGUI(){//sets up the layout and listeners
         setSize(500, 550);
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

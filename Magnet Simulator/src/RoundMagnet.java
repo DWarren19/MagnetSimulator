@@ -1,4 +1,4 @@
-public class RoundMagnet {
+public class RoundMagnet {//this actually simulates round and square magnets
     private Coil[] coils;
     public RoundMagnet(double length, double split, double inner, double outer, double density, int precision){
         //measurements in cm
@@ -62,10 +62,10 @@ public class RoundMagnet {
         //System.out.println(coils.length);//checks how many coils are being analysed (for debugging)
         //System.out.println(coils[coils.length-1]);//make sure this is not null
         for(int i=0; i<coils.length; i++) {
-            //System.out.println(i);
-            total[0] += coils[i].getStrength(x, y, z)[0];
-            total[1] += coils[i].getStrength(x, y, z)[1];
-            total[2] += coils[i].getStrength(x, y, z)[2];
+            double[] magneticFieldStrength = coils[i].getStrength(x, y, z);
+            total[0] += magneticFieldStrength[0];
+            total[1] += magneticFieldStrength[1];
+            total[2] += magneticFieldStrength[2];
         }
         return total;
     }

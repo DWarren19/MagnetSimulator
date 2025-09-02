@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-public class SquareMagnetDiagram extends JPanel {
+public class SquareMagnetDiagram extends JPanel {//a side view of the magnet to check the inner radius
     private double innerLength;
     private double outerLength;
     private double innerRadius;

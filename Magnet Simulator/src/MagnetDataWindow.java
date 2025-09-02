@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class MagnetDataWindow extends JFrame implements ActionListener, KeyListener {
+public class MagnetDataWindow extends JFrame implements ActionListener, KeyListener {//used to save ata about a magnet
     private JLabel label1;
     private JLabel label2;
     private JLabel label3;
@@ -15,7 +15,7 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
     private MagnetData data;
     private JFrame previous;
     private JFileChooser test;
-    public MagnetDataWindow(int x, int y, double[] d, JFrame p, String name){
+    public MagnetDataWindow(int x, int y, double[] d, JFrame p, String name){//allows a user to duplicate a magnet
         setBounds(x, y, 400, 150);
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -40,7 +40,7 @@ public class MagnetDataWindow extends JFrame implements ActionListener, KeyListe
         fileName = new JTextField(name);
         data = new MagnetData(d, d.length==6, "");
     }
-    public MagnetDataWindow(int x, int y, double[] d){
+    public MagnetDataWindow(int x, int y, double[] d){//allows a user to save data about a magnet
         setBounds(x, y, 400, 150);
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -7,9 +7,9 @@ public class OutputDataWindow2d extends JFrame implements ActionListener{
     private JLabel label2;
     private JButton saveData;
     private JTextField fileName;
-    private double[][] data;
+    private String[][] data;
     private JFileChooser test;
-    public OutputDataWindow2d(int x, int y, double[][] d){
+    public OutputDataWindow2d(int x, int y, String[][] d){
         setBounds(x, y, 400, 150);
         setTitle("Magnet Simulator");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

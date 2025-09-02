@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MagnetButton extends JButton implements ActionListener {
+public class MagnetButton extends JButton implements ActionListener {//these buttons allow the user to select different options after opening a .magnet button
     private JLabel name;
     private JButton deleteButton;
     private JButton editButton;
@@ -49,10 +49,10 @@ public class MagnetButton extends JButton implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == this){
+        if (e.getSource() == this){//pressing the button itself allows the user to simulate the magnet
             MagnetData data = FileHandler.readMagnetData(filename, name.getText());
             if (data != null){
-                if (data.toString().charAt(0) == '0'){
+                if (data.toString().charAt(0) == '0'){//round magnet
                     double[] outputData = new double[4];
                     for (int i = 0; i < 4; i++) {
                         outputData[i] = data.getData()[i];
@@ -63,7 +63,7 @@ public class MagnetButton extends JButton implements ActionListener {
                     magnetDiagram.setMagnetData(outputData);
                     previous.setVisible(false);
 
-                } else {
+                } else {//square magnet
                     double[] outputData = new double[4];
                     for (int i = 0; i < 4; i++) {
                         outputData[i] = data.getData()[i];
@@ -79,7 +79,7 @@ public class MagnetButton extends JButton implements ActionListener {
             FileHandler.writeSpecificLine(filename, name.getText(), null);
             previous.reset(false);
             previous.loadData();
-        } else if (e.getSource() == editButton) {
+        } else if (e.getSource() == editButton) {//opens the magnet with the main GUI
             MagnetData data = FileHandler.readMagnetData(filename, name.getText());
             if (data != null){
                 editButton = null;
@@ -99,7 +99,7 @@ public class MagnetButton extends JButton implements ActionListener {
                     previous.setVisible(false);
                 }
             }
-        } else if (e.getSource() == duplicateButton) {
+        } else if (e.getSource() == duplicateButton) {//saves another identical magnet to that file
             MagnetData data = FileHandler.readMagnetData(filename, name.getText());
             if (data != null){
                 while (filename.contains("\\")) {

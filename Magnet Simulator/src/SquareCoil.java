@@ -10,6 +10,7 @@ public class SquareCoil extends Coil {
         MagnetSegment[] segments = new MagnetSegment[curvedSegments + straightSegments];
         double angle = 0;
         int total = 0;
+        //calculates the positions of all the segments, alternating between corners and edges
         for(int count = 0; count <curvedSegments/4; count++) {
             //corner +x +y
             angle += l;

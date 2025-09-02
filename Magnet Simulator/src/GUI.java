@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class GUI extends JFrame implements KeyListener, ActionListener {
+public class GUI extends JFrame implements KeyListener, ActionListener {//this is the main GUI used for data entry
     private JLabel[] inputLabels;
     private JLabel[] unitLabels;
     private JTextField[] inputs;
@@ -24,13 +24,13 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     private JFrame previous;
     private JButton back;
 
-    public GUI(JFrame p){
+    public GUI(JFrame p){//sets the GUI up with empty input boxes as a round magnet
         String[] inputNames =  {"Length (L)", "Split Length (S)", "Inner Radius (IR)", "Outer Radius (OR)"};
         round = true;
         previous = p;
         setUpGui(inputNames);
     }
-    public GUI(JFrame p, double[] data, double density){
+    public GUI(JFrame p, double[] data, double density){//sets the GUI up with filled input boxes as a round magnet
         String[] inputNames =  {"Length (L)", "Split Length (S)", "Inner Radius (IR)", "Outer Radius (OR)"};
         round = true;
         previous = p;
@@ -44,7 +44,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         inputData = data;
         crossSectionDiagram.setMagnetData(data);
     }
-    public GUI(String[] inputNames, boolean r, JFrame p, double[] data, double density){
+    public GUI(String[] inputNames, boolean r, JFrame p, double[] data, double density){//sets the GUI up with filled input boxes as a square magnet
         round = r;
         previous = p;
         setUpGui(inputNames);
@@ -57,13 +57,13 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
         inputData = data;
         crossSectionDiagram.setMagnetData(data);
     }
-    public GUI(String[] inputNames, boolean r, JFrame p) {
+    public GUI(String[] inputNames, boolean r, JFrame p) {//sets the GUI up with empty input boxes as a square magnet
         previous = p;
         round = r;
         setUpGui(inputNames);
     }
 
-    public void setUpGui(String[] inputNames){
+    public void setUpGui(String[] inputNames){//creates the layout of the GUI
         density = "";
         inputLabels = new JLabel[inputNames.length];
         inputs = new JTextField[inputNames.length];
@@ -132,7 +132,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getSource() == densityUnits){
+        if(e.getSource() == densityUnits){//swaps between turns per side and turns per cm
             if(perCm){
                 perCm = false;
                 densityUnits.setText("turns per cm^2");
@@ -144,12 +144,12 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
             }
         }
         if (e.getSource() == nextButton && strToInt(density)!=0 && inputData[0]!=0 && inputData[3]!=0){
-            if (strToInt(density) > (inputData[0]-inputData[1])*(inputData[3]-inputData[2])) {
+            if (strToInt(density) > (inputData[0]-inputData[1])*(inputData[3]-inputData[2])) {//checks if the inputs are valid
                 double densityCm;
                 if (perCm) {
                     densityCm = Math.sqrt(strToInt(density));
                 } else if (round) {
-                    densityCm = Math.sqrt(strToInt(density) / ((inputData[0] - inputData[1]) * (inputData[3] - inputData[2]) / 2));
+                    densityCm = Math.sqrt(strToInt(density) / ((inputData[0] - inputData[1]) * (inputData[3] - inputData[2]) / 2));//calculates the area of each side and from that the density
                 } else {
                     densityCm = Math.sqrt(strToInt(density) / ((inputData[0] - inputData[1]) * (inputData[3] - inputData[2]) / 4));
                 }
@@ -158,7 +158,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {
                 } else {
                     magnet = new RoundMagnet(inputData[0], inputData[1], inputData[2], inputData[3], densityCm, 100, inputData[4]);
                 }
-                SimulationGUI nextGUI = new SimulationGUI(inputData, densityCm, crossSectionDiagram, this, magnet);
+                SimulationGUI nextGUI = new SimulationGUI(inputData, densityCm, crossSectionDiagram, this, magnet);//moves to the next screen
                 setVisible(false);
             }
         } else if (e.getSource() == save && strToInt(density)!=0 && inputData[0]!=0 && inputData[3]!=0){

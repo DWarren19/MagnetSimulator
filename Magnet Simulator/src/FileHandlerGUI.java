@@ -6,11 +6,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 
-public class FileHandlerGUI extends JFrame implements ActionListener, KeyListener {
+public class FileHandlerGUI extends JFrame implements ActionListener {
     private MagnetButton[] buttons;
-    //private JTextField fileName;
     private String fileName;
-    private JLabel fileLabel;
     private JButton back;
     private LoginGUI previous;
     private JFileChooser fileChooser;
@@ -26,17 +24,12 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
         setLayout(null);
         setVisible(true);
 
-        //fileLabel = new JLabel("File Name:");
-        //fileLabel.setBounds(10, 10, 100, 20);
-        //fileLabel.setVisible(false);
-        //add(fileLabel);
-
         fileName = "";
 
         fileChooser = new JFileChooser();
         fileChooser.setBounds(0, 0, 450, 450);
         fileChooserComponents = fileChooser.getComponents();
-        if (fileChooserComponents[fileChooserComponents.length-1].getClass() == JPanel.class) {
+        if (fileChooserComponents[fileChooserComponents.length-1].getClass() == JPanel.class) {//this loop adds actionListeners to the open and cancel buttons built into the file chooser
             fileChooserComponents2 = ((JPanel) fileChooserComponents[fileChooserComponents.length - 1]).getComponents();
             if (fileChooserComponents2[fileChooserComponents2.length-1].getClass() == JPanel.class) {
                 fileChooserComponents3 = ((JPanel) fileChooserComponents2[fileChooserComponents2.length - 1]).getComponents();
@@ -46,23 +39,7 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
                 cancel.addActionListener(this);
             }
         }
-        /*for (Component c: fileChooserComponents){
-            System.out.println(c.getClass()+"\n");
-            if (c.getClass() == JPanel.class){
-                for (Component d: ((JPanel) c).getComponents()){
-                    System.out.println(d.getClass());
-                    if (d.getClass() == JPanel.class){
-                        for (Component e: ((JPanel) d).getComponents()){
-                            System.out.print("   "+e.getClass());
-                        }
-                    }
-                }
-            }
-        }*/
-        File documentsFolder = fileChooser.getCurrentDirectory();
-        //fileChooser.setCurrentDirectory();
-        fileChooser.setFileFilter(new FileNameExtensionFilter("Magnet Data File", "magnet"));
-        //System.out.println(documentsFolder.getPath());
+        fileChooser.setFileFilter(new FileNameExtensionFilter("Magnet Data File", "magnet"));//sets the file type of the file chooser to only open files created with this software
         add(fileChooser);
 
         back = new JButton("Back");
@@ -74,32 +51,30 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
         previous = p;
 
     }
-    public void reset(boolean resetName){
+    public void reset(boolean resetName){//resets the GUI, either removing all buttons or returning to the file chooser
         for (int i = 0; i < buttons.length; i++) {
             remove(buttons[i]);
         }
         if(resetName) {
             fileName = "";
             fileChooser.setVisible(true);
-            //fileLabel.setVisible(false);
             back.setVisible(false);
         }
         update(getGraphics());
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == back || e.getSource() == cancel) {
+        if (e.getSource() == back || e.getSource() == cancel) {//returns to the previous screen
             previous.setVisible(true);
             previous.setBounds(getBounds());
             dispose();
-        } else {
+        } else {//the only button that this is true for is the 'open' button
             if (fileChooser.getSelectedFile() != null) {
                 fileName = fileChooser.getSelectedFile().getPath();
                 fileChooser.setVisible(false);
-                //fileLabel.setVisible(true);
                 back.setVisible(true);
                 String[] magnetNames = FileHandler.readMagnetArray(fileName);
-                if (magnetNames != null) {
+                if (magnetNames != null) {//creates an array of buttons
                     buttons = new MagnetButton[magnetNames.length];
                     for (int i = 0; i < buttons.length; i++) {
                         buttons[i] = new MagnetButton(magnetNames[i], this, fileName);
@@ -113,17 +88,6 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
         }
     }
 
-    @Override
-    public void keyTyped(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (e.getKeyChar() == '\n') {
-            loadData();
-        }
-    }
     public void loadData() {
         String[] magnetNames = FileHandler.readMagnetArray(fileName);
         if (magnetNames != null) {
@@ -135,10 +99,5 @@ public class FileHandlerGUI extends JFrame implements ActionListener, KeyListene
             }
             update(getGraphics());
         }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 }

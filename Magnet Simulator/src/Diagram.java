@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Diagram extends JPanel {
+public class Diagram extends JPanel {// a diagram of the magnet
     public double[] data;
     public int magnetWidth;
     public double[] outputData;
@@ -40,7 +40,7 @@ public class Diagram extends JPanel {
         if (data[0] == 0) {
             data[0] = 1;
         }
-        d[1] /= data[0];
+        d[1] /= data[0];//scales all the measurements to fit within the diagram
         d[1] *= 140;
         d[2] /= data[0];
         d[2] *= 2-square;
@@ -60,7 +60,7 @@ public class Diagram extends JPanel {
         d[3] *= 140;
         repaint();
     }
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g){//adds rectangles to the diagram to represent parts of the magnet
         super.paintComponents(g);
         Graphics2D g2 = (Graphics2D)g;
         g2.setColor(Color.white);
@@ -73,7 +73,7 @@ public class Diagram extends JPanel {
         g2.fillRect(160+(int)(outputData[1]), 100-(int) outputData[3], (int)(magnetWidth/2- outputData[1]), (int) outputData[3]*2);
         g2.setColor(Color.lightGray);
         g2.fillRect(160+(int)(outputData[1]), 100-(int) outputData[2], (int)(magnetWidth/2- outputData[1]), (int) outputData[2]*2);
-
+//adds labeled arrows to the diagram
         g2.fillRect(160+(magnetWidth/2)+6, 120-(int) outputData[2], 8, (int) (outputData[2]-20)*(1+square)+(20*square));
         g2.fillPolygon(new int[]{160+(magnetWidth/2)+1, 160+(magnetWidth/2)+19, 160+(magnetWidth/2)+10}, new int[]{120-(int) outputData[2], 120-(int) outputData[2], 100-(int) outputData[2]}, 3);
         g2.fillRect(160-magnetWidth/2-14, 120-(int) outputData[3], 8, (int) (outputData[3]-20)*(1+square)+(20*square));
@@ -89,7 +89,7 @@ public class Diagram extends JPanel {
         g2.fillPolygon(new int[]{160-(int)outputData[1], 180-(int)outputData[1], 180-(int)outputData[1]}, new int[]{205, 195, 215}, 3);
         g2.fillPolygon(new int[]{160+(int)outputData[1], 140+(int)outputData[1], 140+(int)outputData[1]}, new int[]{205, 195, 215}, 3);
         outputLabels[3].setBounds(160, 195, 20, 20);
-
+//adds a circle to represent the simulation volume
         g2.setColor(Color.darkGray);
         g2.fillOval(160-(int)diameter, 100-(int)diameter, (int)diameter*2, (int)diameter*2);
     }

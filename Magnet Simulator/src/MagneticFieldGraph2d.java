@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MagneticFieldGraph2d extends JFrame implements ActionListener {
+public class MagneticFieldGraph2d extends JFrame implements ActionListener {//a graph of magnetic field strength against distance
     private JFrame previous;
     private JButton back;
     private MagneticFieldGraphDrawing drawing;

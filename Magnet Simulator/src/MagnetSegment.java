@@ -13,7 +13,7 @@ public class MagnetSegment {
     private double z;
 
     private double current;
-    public MagnetSegment(double l,double x,double y,double z,double angleXY, double angleXZ, double i){
+    public MagnetSegment(double l,double x,double y,double z,double angleXY, double angleXZ, double i){//a single short segment of wire
         length = l;
         current = i;
         this.x=x;
@@ -31,17 +31,17 @@ public class MagnetSegment {
         double[] direction = {pointX-x, pointY-y, pointZ-z};
         double r = VectorHandler.toVector(direction);
         for(int i = 0; i<3; i++){
-            direction[i] = (direction[i]/r);
+            direction[i] = (direction[i]/r);//creates a unit vector
         }
         //System.out.println(r);
         double[] total = VectorHandler.vectorMultiply(lengthX, lengthY, lengthZ, direction[0], direction[1], direction[2]);
         //printList(total);
-        for(int i = 0; i<3; i++){
+        for(int i = 0; i<3; i++){//calculates the 3 components of the vector for magnetic field strength
             total[i] = (total[i]*current/Math.pow(r,2))*Math.pow(10, -5);//this would be -7 if it was m not cm
         }
         return total;
     }
-    public double getStrength2(double pointX, double pointY, double pointZ, double angle){//
+    public double getStrength2(double pointX, double pointY, double pointZ, double angle){//used for testing
         double rSquared = Math.pow(pointX-x,2)+Math.pow(pointY-y,2)+Math.pow(pointZ-z,2);
         double total = length;
         total = (total*current/rSquared)*Math.pow(10, -7)*Math.sin(Math.toRadians(angle));

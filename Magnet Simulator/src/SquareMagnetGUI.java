@@ -21,7 +21,7 @@ public class SquareMagnetGUI extends GUI {
         diagramLabel.setBounds(350, 350, 100, 20);
         super.add(diagramLabel);
     }
-    public void keyReleased(KeyEvent e) {
+    public void keyReleased(KeyEvent e) {//this has to be different because measurements are in length, not radius
         super.keyReleased(e);
         diagram.setData(super.inputData[2], super.inputData[3], super.inputData[4]);
     }

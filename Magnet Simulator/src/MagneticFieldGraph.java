@@ -1,13 +1,12 @@
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class MagneticFieldGraph extends JFrame implements ActionListener {
+public class MagneticFieldGraph extends JFrame implements ActionListener {//a graph of magnetic field strength against distance
     private JFrame previous;
     private JButton back;
-    private JButton radial;
     private JButton axial;
+    private JButton radial;
     private JButton diagonal;
     private MagneticFieldGraphDrawing drawing;
     private double[][][] data;
@@ -40,15 +39,15 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
         back.addActionListener(this);
         add(back);
 
-        axial = new JButton("Radial");
-        axial.setBounds(100, 480, 100, 30);
-        axial.addActionListener(this);
-        add(axial);
-
-        radial = new JButton("Axial");
-        radial.setBounds(200, 480, 100, 30);
+        radial = new JButton("Radial");
+        radial.setBounds(100, 480, 100, 30);
         radial.addActionListener(this);
         add(radial);
+
+        axial = new JButton("Axial");
+        axial.setBounds(200, 480, 100, 30);
+        axial.addActionListener(this);
+        add(axial);
 
         diagonal = new JButton("Diagonal");
         diagonal.setBounds(300, 480, 100, 30);
@@ -62,7 +61,7 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
             previous.setVisible(true);
             previous.setBounds(getBounds());
             dispose();
-        } else if (e.getSource() == diagonal) {
+        } else if (e.getSource() == diagonal) {//distance is between the center and the corner
             double[] outputData = new double[data.length];
             for (int i = 0; i < data.length; i++) {
                 outputData[i] = data[i][i][i];
@@ -72,7 +71,7 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
             drawing.setBounds(0, 0, 500, 480);
             add(drawing);
             update(getGraphics());
-        } else if (e.getSource() == axial) {
+        } else if (e.getSource() == radial) {
             double[] outputData = new double[data.length];
             for (int i = 0; i < data.length; i++) {
                 outputData[i] = data[0][0][i];
@@ -82,7 +81,7 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {
             drawing.setBounds(0, 0, 500, 480);
             add(drawing);
             update(getGraphics());
-        }else if (e.getSource() == radial) {
+        }else if (e.getSource() == axial) {
             double[] outputData = new double[data.length];
             for (int i = 0; i < data.length; i++) {
                 outputData[i] = data[i][0][0];

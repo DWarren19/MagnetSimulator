@@ -15,7 +15,7 @@ public class MagnetData {
         int dataPosition = 0;
         int strPosition;
         name = "";
-        for (strPosition = 2; strPosition < inputData.length(); strPosition++) {
+        for (strPosition = 2; strPosition < inputData.length(); strPosition++) {//reads the string as an array, using | as separators
             if(inputData.charAt(strPosition)=='|'){
                 strPosition++;
                 break;
@@ -57,7 +57,7 @@ public class MagnetData {
             }
         }
     }
-    public String toString(){
+    public String toString(){//outputs the array as a string, using | as separators
         String outputData = "";
         for (double d: data){
             outputData+=d;
