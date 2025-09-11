@@ -161,9 +161,9 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             //loops through every point within the specified area (because this area is symmetrical about all 3 planes, only positive values are calculated
             x += 1 / resolution;
             x *= resolution;
-            x = Math.round(x);
+            x = Math.round(x);//the multiplication by 1.01 and the rounding here are both used to avoid incorrect coordinates
             x /= resolution;
-            if (x > diameter / 2) {
+            if (x > diameter / 2) {//x and y represent coordinates perpendicular to the axis of the magnet
                 x = 0;
                 y += 1 / resolution;
                 y *= resolution;
