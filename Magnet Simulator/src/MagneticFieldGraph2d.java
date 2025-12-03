@@ -6,10 +6,6 @@ public class MagneticFieldGraph2d extends JFrame implements ActionListener {//a 
     private JFrame previous;
     private JButton back;
     private MagneticFieldGraphDrawing drawing;
-    private double[][] data;
-    private double increment;
-    private double maximum;
-    private double minimum;
     private JLabel direction;
     public MagneticFieldGraph2d(JFrame p, double[][] data, double increment, double maximum, double minimum, boolean axial) {
         previous = p;
@@ -18,12 +14,8 @@ public class MagneticFieldGraph2d extends JFrame implements ActionListener {//a 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(null);
         setVisible(true);
-        this.data = data;
-        this.increment = increment;
-        this.maximum = maximum;
-        this.minimum = minimum;
 
-        double[] outputData = data[0];
+        double[] outputData = data[1];
 
         drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum, true);
         drawing.setBounds(0, 0, 500, 480);

@@ -74,7 +74,7 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {//a gr
         } else if (e.getSource() == radial) {
             double[] outputData = new double[data.length];
             for (int i = 0; i < data.length; i++) {
-                outputData[i] = data[i][0][0];
+                outputData[i] = data[i][1][1];
             }
             remove(drawing);
             drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum, false);
@@ -84,7 +84,7 @@ public class MagneticFieldGraph extends JFrame implements ActionListener {//a gr
         }else if (e.getSource() == axial) {
             double[] outputData = new double[data.length];
             for (int i = 0; i < data.length; i++) {
-                outputData[i] = data[0][0][i];
+                outputData[i] = data[1][1][i];
             }
             remove(drawing);
             drawing = new MagneticFieldGraphDrawing(outputData, increment, maximum, minimum, false);

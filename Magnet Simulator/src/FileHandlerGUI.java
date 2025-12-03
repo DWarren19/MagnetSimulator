@@ -1,10 +1,7 @@
 import javax.swing.*;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.filechooser.FileView;
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 
 public class FileHandlerGUI extends JFrame implements ActionListener {
     private MagnetButton[] buttons;

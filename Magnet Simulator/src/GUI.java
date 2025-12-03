@@ -39,7 +39,7 @@ public class GUI extends JFrame implements KeyListener, ActionListener {//this i
             inputs[i].setText(String.valueOf(data[i]));
             inputData[i] = data[i];
         }
-        densityInput.setText(String.valueOf(density*density).substring(0, 7));
+        densityInput.setText(((density*density)+"       ").substring(0, 7));
         this.density = String.valueOf(density*density);
         inputData = data;
         crossSectionDiagram.setMagnetData(data);

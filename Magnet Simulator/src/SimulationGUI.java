@@ -143,7 +143,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
         add(progressLabel2);
     }
 
-    public void simulateMagnet() {
+    private void simulateMagnet() {
         while (!stop) {
             double[] strength = magnet.getStrength(x, y, z);
             double s = VectorHandler.toVector(strength);
@@ -193,7 +193,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
         }
     }
 
-    public void simulateMagnet2d(boolean axial){
+    private void simulateMagnet2d(boolean axial){
         while (!stop) {
             double s;
             if(axial) {
@@ -234,7 +234,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
             }
         }
     }
-    public void prepareMagnet() {
+    private void prepareMagnet() {
         if (resolution / (diameter / 2) != (int) (resolution / (diameter / 2))) {
             resolution /= diameter / 2;
             resolution = (int) resolution;
@@ -349,7 +349,7 @@ public class SimulationGUI extends JFrame implements KeyListener, ActionListener
                     size += 1;
                 }
                 axialData = false;
-                magneticFieldData2d = new double[size][size];
+                magneticFieldData2d = new double[size+1][size+1];
                 simulateMagnet2d(false);
                 for (int i = 1; i < size+1; i++) {
                     magneticFieldDataText2d[i][0] = "X = " + (i-1)/resolution + "cm";

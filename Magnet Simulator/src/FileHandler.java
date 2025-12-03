@@ -11,6 +11,7 @@ public class FileHandler {
                 BufferedReader br = new BufferedReader(fr);
 
         ) {
+            boolean found = false;
             String nextLine = br.readLine();
             MagnetData inputData;
             while (nextLine != null){
@@ -18,8 +19,12 @@ public class FileHandler {
                 nextLine = br.readLine();
                 if (!inputData.getName().equals(name)) {
                     lines.add(inputData.toString());
+                } else {
+                    found = true;
                 }
-                line++;
+                if(!found) {
+                    line++;
+                }
             }
         } catch (IOException e) {
             line = -1;
@@ -36,7 +41,6 @@ public class FileHandler {
             if (data != null) {
                 pw.println(data);
             }
-            currentLine++;
             while (currentLine<lines.size()){
                 pw.println(lines.get(currentLine));
                 currentLine++;
@@ -73,12 +77,14 @@ public class FileHandler {
                 FileReader fr = new FileReader(fileName);
                 BufferedReader br = new BufferedReader(fr);
         ) {
-            MagnetData data = new MagnetData(br.readLine());
-            while (data != null){
+            String nextLine = br.readLine();
+            MagnetData data = new MagnetData(nextLine);
+            while (data != null && nextLine != null){
                 if (data.getName().equals(name)) {
                     return data;
                 }
-                data = new MagnetData(br.readLine());
+                nextLine = br.readLine();
+                data = new MagnetData(nextLine);
             }
             return null;
         } catch (IOException e) {

@@ -19,5 +19,4 @@ public class Coil {//a single round or square loop of wire in a solenoid
         }
         return total;
     }
-
 }

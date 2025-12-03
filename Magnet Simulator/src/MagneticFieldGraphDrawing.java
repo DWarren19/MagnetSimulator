@@ -10,7 +10,10 @@ public class MagneticFieldGraphDrawing extends JPanel {
     public MagneticFieldGraphDrawing(double[] data, double increment, double maximum, double minimum, boolean diagonal) {//the image of the graph, not the screen that it is on
         super();
         setBorder(BorderFactory.createLineBorder(Color.black));
-        this.data = data;
+        this.data = new double[data.length-1];
+        for (int i = 1; i < data.length; i++) {
+            this.data[i - 1] = data[i];
+        }
         this.increment = increment;
         this.maximum = maximum;
         this.minimum = minimum;

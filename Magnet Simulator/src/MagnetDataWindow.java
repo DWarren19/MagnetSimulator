@@ -5,7 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class MagnetDataWindow extends JFrame implements ActionListener, KeyListener {//used to save ata about a magnet
+public class MagnetDataWindow extends JFrame implements ActionListener, KeyListener {//used to save data about a magnet
     private JLabel label1;
     private JLabel label2;
     private JLabel label3;

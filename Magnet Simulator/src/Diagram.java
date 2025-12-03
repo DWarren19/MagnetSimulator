@@ -2,12 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Diagram extends JPanel {// a diagram of the magnet
-    public double[] data;
-    public int magnetWidth;
-    public double[] outputData;
-    public JLabel[] outputLabels;
-    public int square;
-    public double diameter;
+    private double[] data;
+    private int magnetWidth;
+    private double[] outputData;
+    private JLabel[] outputLabels;
+    private int square;
+    private double diameter;
     public Diagram(double[] d, boolean r){
         super();
         setBorder(BorderFactory.createLineBorder(Color.black));
